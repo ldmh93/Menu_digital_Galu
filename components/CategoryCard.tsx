@@ -4,26 +4,17 @@ import { motion } from "framer-motion";
 
 import { toPriceTiers, type MenuCategory, type Price } from "@/data/types";
 import { getAccent, type AccentTokens } from "@/lib/accents";
-import { formatPrice } from "@/lib/format";
-import { entradaTarjeta } from "@/lib/motion";
+import { cx, formatPrice } from "@/lib/format";
+import { anchoColumna, tamanoLista } from "@/lib/layout";
+import { alEntrarEnPantalla, entradaAlAparecer } from "@/lib/motion";
 import { ProductList } from "./ProductList";
 
 interface CategoryCardProps {
   category: MenuCategory;
-  /** Columnas internas de la lista de productos. */
-  columns: number;
-  /** Tamano de fuente de los productos, calculado en lib/layout.ts. */
-  fontSize: number;
-  /** Tarjeta protagonista (mas ancha) o secundaria. */
+  /** Tarjeta protagonista (ocupa todo el ancho) o una mas de la fila. */
   emphasis?: "hero" | "normal";
-  /** Tarjeta angosta (3 por fila): apila el precio sobre el titulo. */
-  compact?: boolean;
-  /**
-   * Reserva sitio para dos lineas de titulo y una de descripcion aunque esta
-   * tarjeta no las necesite. Sirve para que las listas de todas las tarjetas de
-   * una misma fila arranquen a la misma altura.
-   */
-  reserveHeader?: boolean;
+  /** Texto buscado, para resaltarlo en los productos. */
+  highlight?: string;
   className?: string;
 }
 
@@ -34,27 +25,26 @@ interface CategoryCardProps {
  */
 export function CategoryCard({
   category,
-  columns,
-  fontSize,
   emphasis = "normal",
-  compact = false,
-  reserveHeader = false,
+  highlight,
   className,
 }: CategoryCardProps) {
   const accent = getAccent(category.accent);
   const esHero = emphasis === "hero";
-  const TITULO_COMPACTO = 34;
 
   return (
     <motion.article
-      variants={entradaTarjeta}
-      className={`group relative flex flex-col ${className ?? ""}`}
+      variants={entradaAlAparecer}
+      initial="oculto"
+      whileInView="visible"
+      viewport={alEntrarEnPantalla}
+      className={cx("group relative", className)}
     >
       {/* Halo de color detras de la tarjeta. Degradado radial en vez de
           `blur()`: mismo aspecto, sin textura extra en la GPU. */}
       <div
         aria-hidden="true"
-        className="absolute -inset-12 opacity-60"
+        className="absolute -inset-6 opacity-60 sm:-inset-10"
         style={{
           // El degradado muere ANTES del borde del elemento (75 %), asi no se
           // adivina el rectangulo que lo contiene.
@@ -63,19 +53,17 @@ export function CategoryCard({
       />
 
       <div
-        className="vidrio brillo-superior relative flex h-full flex-col overflow-hidden rounded-[48px]"
-        style={{
-          boxShadow: "var(--shadow-tarjeta)",
-          paddingLeft: esHero ? 56 : compact ? 34 : 40,
-          paddingRight: esHero ? 56 : compact ? 34 : 40,
-          paddingTop: esHero ? 40 : compact ? 34 : 36,
-          paddingBottom: esHero ? 40 : compact ? 34 : 36,
-        }}
+        className={cx(
+          "vidrio brillo-superior relative flex h-full flex-col overflow-hidden",
+          "rounded-[1.75rem] px-5 py-5 sm:rounded-[2.25rem] sm:px-7 sm:py-6",
+          esHero && "lg:px-9 lg:py-8",
+        )}
+        style={{ boxShadow: "var(--shadow-tarjeta)" }}
       >
         {/* Cinta de acento superior */}
         <span
           aria-hidden="true"
-          className="absolute inset-x-0 top-0 h-[6px]"
+          className="absolute inset-x-0 top-0 h-[4px] sm:h-[6px]"
           style={{
             background: `linear-gradient(90deg, transparent 0%, ${accent.base} 22%, ${accent.base} 78%, transparent 100%)`,
           }}
@@ -84,75 +72,43 @@ export function CategoryCard({
         {/* Lavado de color muy tenue en la esquina superior */}
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -top-32 -right-24 size-80 rounded-full"
+          className="pointer-events-none absolute -top-24 -right-16 size-64 rounded-full"
           style={{
             background: `radial-gradient(circle at 50% 50%, ${accent.wash} 0%, transparent 65%)`,
           }}
         />
 
-        {compact ? (
-          /* Tarjeta angosta: el precio va arriba, centrado, como una medalla.
-             Asi nunca compite por el ancho con el nombre de la categoria. */
-          <header className="relative flex flex-col items-center pb-5 text-center">
-            <Precio price={category.price} accent={accent} size="normal" />
-            <h2
-              className="mt-4 flex items-center justify-center font-[family-name:var(--font-display)] font-semibold text-balance text-tinta"
+        {/*
+          Cabecera fluida: nombre a la izquierda y precio a la derecha, pero con
+          `flex-wrap`. En un celular estrecho un titulo como "Agua, Leche o
+          Yogurt" junto a dos pastillas de precio no cabe en una linea; en vez
+          de encogerlo hasta lo ilegible (que es lo que hacia la version de
+          televisor con su cabecera "apilada"), el precio baja solo a la linea
+          siguiente y se queda alineado a la izquierda con el titulo.
+        */}
+        <header className="relative flex flex-wrap items-start justify-between gap-x-4 gap-y-3 pb-4 sm:pb-5">
+          <div className="min-w-0 flex-1 basis-40">
+            <h3
+              className="font-[family-name:var(--font-display)] font-semibold text-balance text-tinta"
               style={{
-                fontSize: TITULO_COMPACTO,
-                lineHeight: 1.08,
+                fontSize: esHero
+                  ? "clamp(1.4rem, 1.15rem + 1.15vw, 2.1rem)"
+                  : "clamp(1.25rem, 1.05rem + 0.9vw, 1.8rem)",
+                lineHeight: 1.1,
                 letterSpacing: "-0.01em",
-                // Dos lineas siempre: las tarjetas vecinas quedan alineadas.
-                minHeight: reserveHeader ? TITULO_COMPACTO * 2.16 : undefined,
               }}
             >
               {category.name}
-            </h2>
-            {category.description || reserveHeader ? (
-              <p
-                className="mt-1.5 font-light text-balance text-tinta-suave"
-                style={{ fontSize: 21, lineHeight: 1.3, minHeight: 27 }}
-              >
-                {category.description ?? " "}
+            </h3>
+            {category.description ? (
+              <p className="mt-1 text-[0.8rem] leading-snug font-light text-tinta-suave sm:text-[0.95rem]">
+                {category.description}
               </p>
             ) : null}
-          </header>
-        ) : (
-          <header
-            className={`relative flex items-start justify-between gap-6 ${
-              esHero ? "pb-6" : "pb-5"
-            }`}
-          >
-            <div className="min-w-0">
-              <h2
-                className="font-[family-name:var(--font-display)] font-semibold text-tinta"
-                style={{
-                  fontSize: esHero ? 52 : 42,
-                  lineHeight: 1.08,
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {category.name}
-              </h2>
-              {category.description || reserveHeader ? (
-                <p
-                  className="mt-1.5 font-light text-tinta-suave"
-                  style={{
-                    fontSize: esHero ? 25 : 22,
-                    minHeight: esHero ? 33 : 29,
-                  }}
-                >
-                  {category.description ?? " "}
-                </p>
-              ) : null}
-            </div>
+          </div>
 
-            <Precio
-              price={category.price}
-              accent={accent}
-              size={esHero ? "grande" : "normal"}
-            />
-          </header>
-        )}
+          <Precio price={category.price} accent={accent} destacado={esHero} />
+        </header>
 
         {/* Separador degradado, nunca una linea dura */}
         <span
@@ -163,15 +119,13 @@ export function CategoryCard({
           }}
         />
 
-        <div
-          className={esHero ? "relative pt-6" : "relative pt-5"}
-          style={compact ? { paddingLeft: 4 } : undefined}
-        >
+        <div className="relative pt-4 sm:pt-5">
           <ProductList
             items={category.items}
-            columns={columns}
+            columnWidth={anchoColumna(category)}
             accent={accent}
-            fontSize={fontSize}
+            fontSize={tamanoLista(category.items)}
+            highlight={highlight}
           />
         </div>
       </div>
@@ -182,20 +136,19 @@ export function CategoryCard({
 /**
  * Precio de la categoria.
  * Con un solo importe es una pildora. Con varios tamanos (16 oz / 24 oz) es un
- * grupo de pildoras con el tamano encima del importe, para que desde lejos se
- * lea primero el numero grande y luego a que medida corresponde.
+ * grupo de pildoras con el tamano encima del importe, para que se lea primero
+ * el numero grande y luego a que medida corresponde.
  */
 function Precio({
   price,
   accent,
-  size,
+  destacado,
 }: {
   price?: Price;
   accent: AccentTokens;
-  size: "grande" | "normal";
+  destacado: boolean;
 }) {
   const tiers = toPriceTiers(price);
-  const esGrande = size === "grande";
 
   // Sin precio de categoria: cada producto lleva el suyo en la lista.
   if (tiers.length === 0) return null;
@@ -203,18 +156,21 @@ function Precio({
   if (tiers.length === 1 && !tiers[0].label) {
     return (
       <div
-        className="shrink-0 rounded-full"
+        className="shrink-0 rounded-full px-4 py-1.5 sm:px-5 sm:py-2"
         style={{
           backgroundColor: accent.base,
           color: accent.onBase,
-          paddingInline: esGrande ? 30 : 24,
-          paddingBlock: esGrande ? 12 : 10,
           boxShadow: "var(--shadow-pildora)",
         }}
       >
         <span
           className="font-[family-name:var(--font-body)] font-semibold tabular-nums"
-          style={{ fontSize: esGrande ? 46 : 38, lineHeight: 1.15 }}
+          style={{
+            fontSize: destacado
+              ? "clamp(1.25rem, 1.05rem + 0.9vw, 1.85rem)"
+              : "clamp(1.15rem, 1rem + 0.7vw, 1.6rem)",
+            lineHeight: 1.15,
+          }}
         >
           {formatPrice(tiers[0].value)}
         </span>
@@ -223,32 +179,29 @@ function Precio({
   }
 
   return (
-    <div className="flex shrink-0 items-stretch gap-2">
+    <div className="flex shrink-0 items-stretch gap-1.5 sm:gap-2">
       {tiers.map((tier) => (
         <div
           key={tier.label}
-          className="flex flex-col items-center rounded-[28px]"
+          className="flex flex-col items-center rounded-[1.15rem] px-3 py-1.5 sm:px-4 sm:py-2"
           style={{
             backgroundColor: accent.base,
             color: accent.onBase,
-            paddingInline: esGrande ? 22 : 18,
-            paddingBlock: esGrande ? 10 : 8,
             boxShadow: "var(--shadow-pildora)",
           }}
         >
           <span
-            className="font-[family-name:var(--font-body)] font-medium uppercase opacity-75"
-            style={{
-              fontSize: esGrande ? 18 : 16,
-              letterSpacing: "0.12em",
-              lineHeight: 1.2,
-            }}
+            className="font-[family-name:var(--font-body)] text-[0.6rem] font-medium uppercase opacity-75 sm:text-[0.7rem]"
+            style={{ letterSpacing: "0.12em", lineHeight: 1.2 }}
           >
             {tier.label}
           </span>
           <span
             className="font-[family-name:var(--font-body)] font-semibold tabular-nums"
-            style={{ fontSize: esGrande ? 38 : 32, lineHeight: 1.15 }}
+            style={{
+              fontSize: "clamp(1rem, 0.88rem + 0.55vw, 1.4rem)",
+              lineHeight: 1.15,
+            }}
           >
             {formatPrice(tier.value)}
           </span>

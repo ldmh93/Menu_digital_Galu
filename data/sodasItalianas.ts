@@ -10,11 +10,6 @@ export const sodasItalianas: MenuGroup = {
       title: "Sodas Italianas",
       section: "Todos los Sabores",
       layout: "solo",
-      photo: {
-        src: "/productos/sodas-italianas.png",
-        alt: "Soda italiana de GALU",
-        fallbackIcon: "boba",
-      },
       categories: [
         {
           id: "sabores",

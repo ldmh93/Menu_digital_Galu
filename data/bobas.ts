@@ -3,9 +3,9 @@ import type { MenuExtra, MenuGroup, MenuScreen } from "./types";
 /**
  * BOBAS — datos oficiales de GALU.
  *
- * El menu completo son 64 sabores base + 72 combinaciones: imposible en una
- * sola pantalla sin letra ilegible. Se reparte en cinco pantallas que el
- * autoplay recorre en orden.
+ * El menu completo son 64 sabores base + 72 combinaciones. Se reparte en cinco
+ * bloques (sabores, especiales, combinaciones...) para que cada uno se lea como
+ * una carta corta en el celular en lugar de una lista interminable.
  *
  * Todos los tamanos son 16 oz y 24 oz.
  */
@@ -30,12 +30,6 @@ const EXTRAS: MenuExtra[] = [
   { name: "Tapioca", price: 15 },
 ];
 
-const FOTO = {
-  src: "/productos/bobas.png",
-  alt: "Boba de GALU",
-  fallbackIcon: "boba",
-} as const;
-
 // ---------------------------------------------------------------------------
 // 1 · Sabores base
 // ---------------------------------------------------------------------------
@@ -45,7 +39,6 @@ const bobasSabores: MenuScreen = {
   title: "Bobas",
   section: "Sabores",
   layout: "trio",
-  photo: FOTO,
   categories: [
     {
       id: "agua",
@@ -137,7 +130,6 @@ const bobasEspeciales: MenuScreen = {
   title: "Bobas",
   section: "Especiales y Café",
   layout: "duo",
-  photo: FOTO,
   categories: [
     {
       id: "leche-yogurt-especiales",
@@ -197,7 +189,6 @@ const bobasCombinacionesLeche: MenuScreen = {
   title: "Bobas",
   section: "Combinaciones · Leche y Yogurt",
   layout: "solo",
-  photo: FOTO,
   categories: [
     {
       id: "combinaciones-leche-yogurt",
@@ -274,7 +265,6 @@ const bobasCombinacionesAgua: MenuScreen = {
   title: "Bobas",
   section: "Combinaciones · Agua",
   layout: "feature",
-  photo: FOTO,
   categories: [
     {
       id: "combinaciones-agua",
@@ -345,7 +335,6 @@ const bobasMonster: MenuScreen = {
   title: "Bobas",
   section: "Monster y Yogurt",
   layout: "feature",
-  photo: FOTO,
   categories: [
     {
       id: "los-de-monster",

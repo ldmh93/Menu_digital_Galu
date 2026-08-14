@@ -63,50 +63,46 @@ export interface MenuCategory {
 }
 
 /**
- * Distribucion de las tarjetas en pantalla.
+ * Reparto de las tarjetas cuando hay ancho de sobra (tablet y escritorio).
+ * En el celular SIEMPRE es una tarjeta por fila; esto solo decide como se
+ * agrupan cuando la pantalla da para mas de una columna.
+ *
  * - `solo`   → una unica tarjeta a todo lo ancho.
- * - `duo`    → dos tarjetas del mismo ancho.
- * - `trio`   → tres tarjetas del mismo ancho.
- * - `feature`→ una tarjeta principal ancha arriba y el resto debajo. Se usa
- *              cuando una categoria tiene muchos mas productos que las otras,
- *              para no sacrificar el tamano de letra.
+ * - `duo`    → hasta dos tarjetas por fila.
+ * - `trio`   → hasta tres tarjetas por fila.
+ * - `feature`→ la primera a todo lo ancho y el resto repartidas debajo. Se usa
+ *              cuando una categoria tiene muchos mas productos que las otras.
  */
 export type MenuLayout = "solo" | "duo" | "trio" | "feature";
 
-export interface MenuPhoto {
-  /** Ruta dentro de /public/productos. Si el archivo no existe se muestra un
-   *  marcador elegante en lugar de romper la pantalla. */
-  src: string;
-  alt: string;
-  /** Icono de respaldo mientras no haya fotografia. */
-  fallbackIcon?: "helado" | "boba" | "yogurt" | "malteada" | "postre";
-}
-
-/** Complemento de pago aparte que se muestra como pastilla en el pie. */
+/** Complemento de pago aparte que se muestra como pastilla bajo las tarjetas. */
 export interface MenuExtra {
   name: string;
   price: number;
 }
 
+/**
+ * Un bloque del menu. Antes era literalmente una pantalla de televisor; ahora
+ * es un tramo de la pagina, pero el contrato de datos no cambia.
+ */
 export interface MenuScreen {
-  /** Identificador estable y slug de ruta: /menu/{slug}. */
+  /** Identificador estable, tambien usado como ancla en la pagina. */
   slug: string;
-  /** Titulo grande de la pantalla. */
+  /** Titulo grande del menu. */
   title: string;
   /**
-   * Seccion dentro del menu, en pastilla bajo el titulo. Se usa cuando un menu
-   * ocupa varias pantallas: el titulo no cambia y la seccion si.
+   * Seccion dentro del menu. Se usa cuando un menu se reparte en varios
+   * bloques: el titulo no cambia y la seccion si.
    */
   section?: string;
   /** Frase corta bajo el titulo. */
   tagline?: string;
   /**
-   * Anula la forma de preparacion de config/site.ts en ESTA pantalla.
+   * Anula la forma de preparacion de config/site.ts en ESTE bloque.
    * `null` la oculta (util si un menu no se sirve late ni frapeado).
    */
   preparation?: string | null;
   layout?: MenuLayout;
-  photo: MenuPhoto;
   categories: MenuCategory[];
   /** Nota al pie especifica de este menu. */
   footnote?: string;
@@ -114,11 +110,11 @@ export interface MenuScreen {
   extras?: MenuExtra[];
 }
 
-/** Agrupacion de pantallas que pertenecen al mismo menu (p. ej. Bobas). */
+/** Agrupacion de bloques que pertenecen al mismo menu (p. ej. Bobas). */
 export interface MenuGroup {
-  /** Slug de la ruta: /menu/{slug}. */
+  /** Slug de la ruta: /menu/{slug} y ancla de la pagina principal. */
   slug: string;
-  /** Nombre corto para el indicador de reproduccion. */
+  /** Nombre corto para la barra de navegacion. */
   label: string;
   screens: MenuScreen[];
 }

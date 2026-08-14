@@ -1,11 +1,12 @@
 # GALU · Menú digital
 
-Pantalla de señalización digital para GALU (Bobas, Frozen Yogurt, Ice Rollers,
-Malteadas y Especialidades). Next.js 15 (App Router) + TypeScript + TailwindCSS 4
-+ Framer Motion + Lucide.
+Carta en línea de GALU (Ice Rollers, Bobas, Frozen Yogurt, Sodas Italianas,
+Blizz, Malteadas y Especialidades). Next.js 15 (App Router) + TypeScript +
+TailwindCSS 4 + Framer Motion + Lucide.
 
-Diseñada sobre un lienzo fijo de **1080 × 1920 (9:16)** que se escala solo a
-cualquier pantalla vertical.
+Pensada para el **celular** del cliente: una sola página que se recorre con el
+dedo, con barra de menús pegajosa y buscador. Se adapta sola a tablet y a
+computadora.
 
 ---
 
@@ -23,54 +24,65 @@ npm run build
 npm start
 ```
 
-### Si el proyecto está en un disco externo (exFAT)
+### ⚠️ No trabajes desde el disco externo `E:`
 
-Hay una copia de respaldo en `E:\Proyectos web\menu digital galu`. Ese disco
-está formateado en **exFAT**, y su controlador de Windows responde `EISDIR` a
-`readlink` sobre archivos normales, cuando lo correcto —y lo que hace NTFS— es
-`EINVAL` ("no es un enlace simbólico"). Webpack no sabe interpretar ese código
-y aborta:
+**El disco externo está corrompiendo archivos.** No es una sospecha: durante el
+trabajo del 13 de agosto de 2026 se comprobó tres veces sobre la misma copia en
+`E:\Proyectos web\menu digital galu`.
 
-```
-EISDIR: illegal operation on a directory, readlink 'app/page.tsx'
-```
+1. `node_modules/next/dist/build/webpack/plugins/eval-source-map-dev-tool-plugin.js`
+   apareció con sus 10 144 bytes **escritos a ceros**. Síntoma: al arrancar,
+   `SyntaxError: Invalid or unexpected token` y nada más.
+2. Tras reinstalar, el binario nativo de SWC (148 MB) quedó dañado y `next
+   build` moría con `exited with code: 3221225477` — que es
+   `STATUS_ACCESS_VIOLATION` de Windows, o sea un cierre en seco del proceso.
+3. Tras esa reinstalación, `framer-motion/dist/es/index.mjs` **contenía en
+   disco el código de otro archivo de Next**, un `recursive-readdir.ts` que no
+   tiene nada que ver.
 
-Para trabajar desde ahí hay dos scripts que precargan
-`exfat-readlink-fix.cjs`, un parche que traduce ese único caso:
+Y `npm ci` tarda **9 minutos** ahí contra **28 segundos** en el disco interno.
 
-```bash
-npm run dev:exfat
-npm run build:exfat
-```
+Copia el proyecto a una carpeta del disco interno y trabaja desde ahí. Conviene
+además pasarle un `chkdsk E: /f` al disco y revisar el cable o la carcasa; los
+archivos de `/data`, `/app` y `/components` también pueden corromperse, y ahí
+sí se pierde trabajo.
 
-En NTFS y en Vercel se usan los scripts normales: el parche no interviene y no
-cambia nada. Estos dos son solo para Windows.
+El proyecto ya no necesita ningún parche para vivir en exFAT: donde el
+controlador daba problemas era en `readlink`, y ahora `next.config.ts` apaga la
+resolución de enlaces simbólicos de webpack (`resolve.symlinks = false`), que
+evita esas llamadas de raíz. Se borraron `exfat-readlink-fix.cjs` y los scripts
+`dev:exfat` / `build:exfat`: bastan `npm run dev` y `npm run build`.
 
 ## URLs
 
 | URL | Qué muestra |
 | --- | --- |
-| `/` | **La que va en la TV.** Reproduce todos los menús en bucle |
-| `/menu/ice-rollers` | Solo Ice Rollers (1 pantalla) |
-| `/menu/bobas` | Solo Bobas (sus 5 pantallas en bucle) |
+| `/` | **La del código QR.** Toda la carta, un menú tras otro |
+| `/menu/ice-rollers` | Solo Ice Rollers |
+| `/menu/bobas` | Solo Bobas (sus 5 bloques) |
 | `/menu/frozen-yogurt` | Solo Frozen Yogurt |
 | `/menu/sodas-italianas` | Solo Sodas Italianas |
 | `/menu/blizz` | Solo Blizz |
 | `/menu/malteadas` | Pendiente de datos |
 | `/menu/especialidades` | Pendiente de datos |
 
-Ciclo actual en `/`: **9 pantallas** (Ice Rollers 1 + Bobas 5 + Frozen Yogurt 1
-+ Sodas Italianas 1 + Blizz 1) ≈ 108 segundos.
+Las rutas de un solo menú salen de **una** ruta dinámica (`app/menu/[slug]`):
+al añadir un menú a `/data` su URL existe sola, sin crear carpetas. Siguen
+siendo estáticas.
 
-### Controles durante la instalación
+---
 
-| Acción | Efecto |
-| --- | --- |
-| `?autoplay=off` | Arranca en pausa (ej. `http://localhost:3000/?autoplay=off`) |
-| `→` / `←` | Pantalla siguiente / anterior |
-| Barra espaciadora | Pausar / reanudar |
+## Cómo se recorre la carta
 
-El cursor se oculta solo tras 4 segundos sin movimiento.
+- **Barra de menús pegajosa.** Se arrastra con el dedo, se ilumina el menú que
+  se está leyendo y la fila se centra sola en él.
+- **Buscador.** Filtra por nombre y por ingredientes, sin acentos ("platano"
+  encuentra "Plátano") y marcando en amarillo lo encontrado. Con más de 200
+  productos repartidos en siete cartas, es la diferencia entre encontrar la
+  Nutella y rendirse.
+- **Volver arriba.** Aparece tras un rato de recorrido.
+- Se respeta `prefers-reduced-motion`: con esa opción se detienen los bucles de
+  fondo y las entradas de las tarjetas.
 
 ---
 
@@ -81,21 +93,21 @@ componente.**
 
 ```
 data/
-  iceRollers.ts      ← datos reales (1 pantalla)
-  bobas.ts           ← datos reales (5 pantallas)
-  frozenYogurt.ts    ← datos reales (1 pantalla)
-  sodasItalianas.ts  ← datos reales (1 pantalla)
-  blizz.ts           ← datos reales (1 pantalla)
+  iceRollers.ts      ← datos reales (1 bloque)
+  bobas.ts           ← datos reales (5 bloques)
+  frozenYogurt.ts    ← datos reales (1 bloque)
+  sodasItalianas.ts  ← datos reales (1 bloque)
+  blizz.ts           ← datos reales (1 bloque)
   malteadas.ts       ← PENDIENTE, sin productos
   especialidades.ts  ← PENDIENTE, sin productos
   types.ts           ← el "esquema" de los datos
-  menus.ts           ← registro y orden de reproducción
+  menus.ts           ← registro y orden de aparición
 ```
 
-Cada archivo exporta un **grupo** (`MenuGroup`): un menú puede ocupar una
-pantalla o varias. Bobas usa cinco porque son 64 sabores base + 72
-combinaciones; todas llevan el mismo título "Bobas" y se distinguen por la
-pastilla de sección (`section`).
+Cada archivo exporta un **grupo** (`MenuGroup`): un menú puede ocupar un bloque
+o varios. Bobas usa cinco porque son 64 sabores base + 72 combinaciones; todos
+llevan el mismo título "Bobas" y se distinguen por el subtítulo de sección
+(`section`).
 
 Un producto puede ser texto plano o un objeto:
 
@@ -122,15 +134,15 @@ price: [{ label: "16 oz", value: 72 },                // dos pastillas
 items: [{ name: "Cono", description: "1 topping · sin fruta", price: 35 }]
 ```
 
-Y se puede forzar el número de columnas de una lista cuando conviene
-(`columns: 1` en Frozen Yogurt para que se lea como tarifa):
+Y se puede forzar una sola columna cuando la lista es una tarifa y se lee mejor
+seguida (`columns: 1` en Frozen Yogurt):
 
 ```ts
 { id: "tamanos", name: "Tamaños", columns: 1, items: [...] }
 ```
 
 Los extras aparecen como pastillas justo debajo de las tarjetas, pegados al
-contenido (no al pie), porque son una extensión del menú:
+contenido:
 
 ```ts
 extras: [{ name: "Leche vegetal", price: 10 }, { name: "Tapioca", price: 15 }]
@@ -141,39 +153,15 @@ Los acentos disponibles (`accent`) son los colores del fondo oficial:
 
 ### Ajustes globales
 
-`config/site.ts` — subtítulo del header, segundos por pantalla, orden de
-reproducción, redes sociales. No hay que tocar código para cambiarlos.
+`config/site.ts` — subtítulo, orden de los menús, redes sociales y la firma del
+pie. No hay que tocar código para cambiarlos.
 
-`preparation` es la forma de preparación que sale bajo el título de **todas**
-las pantallas ("Late o Frapeado"). Déjala en `""` para quitarla de todas, o
-pon `preparation: null` en una pantalla concreta de `/data` para ocultarla
-solo ahí.
+`preparation` es la forma de preparación que sale bajo el título de **todos**
+los menús ("Late o Frapeado"). Déjala en `""` para quitarla de todos, o pon
+`preparation: null` en un bloque concreto de `/data` para ocultarla solo ahí.
 
----
-
-## Fotografías de producto
-
-Coloca los archivos en `public/productos/` con estos nombres:
-
-```
-ice-rollers.png
-bobas.png
-frozen-yogurt.png
-malteadas.png
-especialidades.png
-```
-
-- **PNG con fondo transparente**, ~1200 px de lado.
-- Mientras el archivo no exista se muestra un marcador elegante en su lugar; la
-  pantalla nunca se rompe.
-- La ruta se declara en el campo `photo.src` de cada archivo de datos.
-
-### Logo
-
-`public/logo.png` mide **266 × 108 px**. Se muestra a 330 px de ancho, así que
-se ve ligeramente suavizado. Para nitidez perfecta en un televisor 4K conviene
-sustituirlo por el **SVG original** o un PNG de al menos 1000 px de ancho
-(mismo nombre y proporción).
+`credits` es la firma del desarrollo (nombre, descripción y teléfono). El
+teléfono se convierte solo en un enlace `tel:` marcable.
 
 ---
 
@@ -181,19 +169,18 @@ sustituirlo por el **SVG original** o un PNG de al menos 1000 px de ancho
 
 ```
 app/
-  layout.tsx            fuentes (Fredoka + Poppins) y metadatos
-  page.tsx              reproductor en bucle → es la URL de la TV
-  menu/<slug>/page.tsx  vista fija de un solo menú
+  layout.tsx            fuentes, metadatos para compartir y fondo
+  page.tsx              la carta completa → es la URL del QR
+  menu/[slug]/page.tsx  un solo menú, generado estáticamente
 components/
-  ScreenFrame.tsx       lienzo 1080×1920 escalado al viewport + modo kiosco
-  MenuAutoplay.tsx      temporizador, fundido cruzado y controles de teclado
-  MenuScreen.tsx        composición de una pantalla (única fuente del layout)
-  FitContent.tsx        ajuste automático de densidad
-  Header / Logo / MenuTitle / CategoryCard / ProductList
-  FloatingImage / Footer / PlaylistProgress
-  Background / AnimatedBackground
+  MenuBrowser.tsx       búsqueda, menú activo y montaje de la página
+  MenuNav.tsx           barra pegajosa: menús + buscador
+  MenuSection.tsx       un menú entero (título, bloques, extras, nota)
+  CategoryCard.tsx      tarjeta de categoría
+  ProductList.tsx       lista de productos y resaltado de la búsqueda
+  SiteHeader / SiteFooter / SiteBackground / Logo / ExtrasBar / BackToTop
 lib/
-  layout.ts             columnas y tamaño de letra calculados
+  layout.ts             reglas de reparto y filtrado
   accents.ts            colores de marca por acento
   motion.ts             lenguaje de animación
   format.ts             precios y utilidades
@@ -202,44 +189,47 @@ styles/globals.css      tokens de diseño (paleta, sombras, cristal)
 
 ### Decisiones que conviene conocer
 
-**Lienzo fijo escalado.** Todo se compone en píxeles reales de 1080 × 1920 y se
-escala con `transform`. La pantalla se ve idéntica en un monitor vertical 1080p,
-en un 4K o en el navegador: sin reflow ni breakpoints que rompan la composición.
+**Una página, no un pase de diapositivas.** La versión anterior era señalización
+para un televisor: lienzo fijo de 1080 × 1920 escalado con `transform`, y las
+cartas pasando solas cada doce segundos. En un televisor tiene sentido, porque
+el cliente mira de lejos y no puede tocar nada. En un celular las dos ideas se
+vuelven en contra: el lienzo fijo deja la letra diminuta, y esperar turno para
+ver el precio de un frozen yogurt es insufrible. Ahora todo fluye y se navega.
 
-**Cuatro distribuciones.** `solo` (una tarjeta a todo lo ancho), `duo`, `trio` y
-`feature` (una tarjeta principal ancha arriba y el resto debajo). Se elige sola
-según cuántas categorías haya y cómo estén de equilibradas — Ice Rollers tiene
-21 · 11 · 8, así que usa `feature` porque tres columnas iguales obligarían a
-letra pequeña. Se puede forzar con el campo `layout` del menú.
+**El navegador reparte, nosotros declaramos.** Ya no se calcula en píxeles
+cuántas columnas caben: las listas usan `column-width` de CSS, así que el
+aparato mete dos columnas de sabores en un celular y seis en un monitor, con el
+mismo código y sin saber de antemano el ancho. El orden de lectura sigue siendo
+vertical, como en una carta impresa. Los tamaños de letra son `clamp()`: crecen
+con la pantalla, y una lista de siete tamaños se lee más grande que una de
+cuarenta sabores.
 
-**Tipografía calculada, no adivinada.** `lib/layout.ts` decide cuántas columnas
-lleva cada lista y con qué tamaño de letra, a partir del ancho real de la
-tarjeta y de la longitud de los nombres. Las tarjetas vecinas comparten tamaño y
-reservan la misma altura de cabecera, para que todas las listas arranquen a la
-misma altura aunque un título ocupe dos líneas. Y una lista corta usa letra más
-grande que una de cuarenta sabores: si sobra sitio, se aprovecha.
+**El reparto de tarjetas es solo para pantallas grandes.** `solo`, `duo`, `trio`
+y `feature` siguen existiendo en los datos, pero ahora significan "hasta cuántas
+por fila cuando sobra ancho". En el celular siempre es una.
 
-Con **una** columna se admite que el nombre más largo se parta en dos (la
-sangría francesa lo resuelve). Con **varias**, la letra se calcula para que
-ninguno se parta: en una rejilla, un nombre partido estira toda la fila y deja
-huecos en las demás columnas.
+**Lo repetido se dice una vez.** Cada bloque de Bobas repetía "Todas disponibles
+en 16 y 24 oz" y las cuatro pastillas de extras, porque cada pantalla se veía
+sola. En una página que se recorre de un tirón eso es ruido: si el dato es igual
+en todos los bloques, se saca una sola vez al final del menú.
 
-**Cabecera de precio adaptativa.** Con un solo importe va a la derecha del
-título; con varios tamaños (16 oz / 24 oz) el grupo de pastillas necesita
-demasiado ancho, así que en tarjetas estrechas se sube y se centra sobre el
-nombre, como una medalla.
+**Nada de `backdrop-filter` en las tarjetas.** Obliga al navegador a releer y
+desenfocar todo lo que hay detrás en cada repintado — y en una página que se
+arrastra con el dedo, eso es en cada cuadro del scroll. Sobre un cristal que ya
+es blanco al 80-90 % el desenfoque no se nota: el aspecto lo dan el degradado,
+el borde claro y la sombra. La única excepción es la barra pegajosa, que son 70
+píxeles de alto y no cuesta nada.
 
-**Ajuste de densidad.** `FitContent` mide el bloque de tarjetas y lo reduce solo
-lo necesario si un menú crece mucho. Nunca se corta un producto. No amplía por
-encima del 100 % a propósito: hacerlo estrecharía las columnas.
+**Fondo fijo.** El arte va en una capa `fixed` y la carta se desliza por encima:
+da sensación de profundidad y el compositor no repinta nada al hacer scroll. El
+arte es un lienzo 9:16, así que en un monitor ancho se recorta y quedaría solo
+la trama de chispas; los halos pastel de esa misma capa (medidos en `vmax`)
+devuelven las manchas de color a cualquier proporción.
 
-**Rendimiento.** Las 6 rutas son estáticas (~155 kB de JS). El fondo es un SVG
-(nítido a cualquier resolución), las fotos usan `next/image` con lazy loading y
-formatos AVIF/WebP, y el autoplay no navega entre rutas: mantiene las pantallas
-en memoria para que no haya parpadeos ni recargas.
-
-**Accesibilidad y consumo.** Se respeta `prefers-reduced-motion`: con esa opción
-activada se detienen los bucles de flotación y de fondo.
+**Animaciones al entrar en pantalla, y una sola vez.** Las tarjetas aparecen con
+`whileInView` en lugar de animarse todas al cargar. Los productos ya no se
+animan uno a uno: doscientos elementos escalonados se sienten como lentitud
+justo cuando el dedo quiere avanzar.
 
 ---
 
@@ -248,7 +238,7 @@ activada se detienen los bucles de flotación y de fondo.
 Los archivos de `/data` implementan los tipos de `data/types.ts`. Cuando exista
 el panel, basta con:
 
-1. Convertir `getGroup()` y `getPlaylistScreens()` de `data/menus.ts` en
+1. Convertir `getGroup()` y `getPlaylistGroups()` de `data/menus.ts` en
    funciones `async` que consulten la base de datos.
 2. Hacer lo mismo con `site` de `config/site.ts`.
 

@@ -11,11 +11,6 @@ export const especialidades: MenuGroup = {
     {
       slug: "especialidades",
       title: "Especialidades",
-      photo: {
-        src: "/productos/especialidades.png",
-        alt: "Postre especial de GALU",
-        fallbackIcon: "postre",
-      },
       categories: [],
     },
   ],

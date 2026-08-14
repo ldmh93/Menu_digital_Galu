@@ -54,12 +54,27 @@ export const entradaTarjeta: Variants = {
   },
 };
 
-/** Transicion entre pantallas del autoplay. */
-export const cambioDePantalla: Variants = {
-  oculto: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.9, ease: EASE_SUAVE } },
-  salida: {
-    opacity: 0,
-    transition: { duration: 0.7, ease: EASE_SUAVE },
+/**
+ * Entrada al entrar en pantalla al hacer scroll.
+ *
+ * Mas corta y mas discreta que `entradaTarjeta`: en el televisor la animacion
+ * se veia una vez cada doce segundos, aqui se dispara mientras el dedo esta
+ * moviendo la pagina, y cualquier exceso se siente como lentitud.
+ */
+export const entradaAlAparecer: Variants = {
+  oculto: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: EASE_SUAVE },
   },
 };
+
+/**
+ * Margen de disparo comun para `whileInView`.
+ * `once` es deliberado: reanimar al volver a subir marea.
+ */
+export const alEntrarEnPantalla = {
+  once: true,
+  margin: "0px 0px -12% 0px",
+} as const;

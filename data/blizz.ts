@@ -14,11 +14,6 @@ export const blizz: MenuGroup = {
       title: "Blizz",
       section: "Clásicos, Especiales y Premium",
       layout: "trio",
-      photo: {
-        src: "/productos/blizz.png",
-        alt: "Blizz de GALU",
-        fallbackIcon: "malteada",
-      },
       categories: [
         {
           id: "clasico",

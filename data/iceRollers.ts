@@ -9,11 +9,6 @@ const iceRollersPantalla: MenuScreen = {
   title: "Ice Rollers",
   section: "Helado Enrollado",
   layout: "feature",
-  photo: {
-    src: "/productos/ice-rollers.png",
-    alt: "Ice roller de GALU con toppings",
-    fallbackIcon: "helado",
-  },
   categories: [
     {
       id: "clasicos",

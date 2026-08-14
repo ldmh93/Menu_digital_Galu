@@ -35,31 +35,69 @@
   --shadow-pildora: 0 10px 24px -10px rgb(59 42 77 / 0.35);
 }
 
+/* Alto de la barra de navegacion pegajosa. Lo usan el `scroll-margin` de cada
+   menu y el desplazamiento suave, para que un titulo nunca quede tapado. */
+:root {
+  --alto-nav: 4.25rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --alto-nav: 4.75rem;
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Base                                                                */
 /* ------------------------------------------------------------------ */
+html {
+  /* Al tocar un menu de la barra, la pagina se desliza hasta el en vez de
+     saltar. Se desactiva mas abajo si el sistema pide menos movimiento. */
+  scroll-behavior: smooth;
+  /* Deja sitio bajo la barra pegajosa al saltar a un ancla. */
+  scroll-padding-top: calc(var(--alto-nav) + 0.75rem);
+  -webkit-text-size-adjust: 100%;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--color-crema);
   color: var(--color-tinta);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-body {
-  /* La pantalla es un kiosco: sin scroll ni seleccion accidental. */
-  overflow: hidden;
-  overscroll-behavior: none;
-  -webkit-user-select: none;
-  user-select: none;
+/* El crema va SOLO en `html`.
+   El fondo de la pagina es una capa fija con `z-index: -1`, y esa capa se
+   pinta por debajo del fondo de `body` pero por encima del de `html` (que el
+   navegador propaga al lienzo). Si `body` tambien llevara color, taparia el
+   arte por completo y la pagina se veria lisa. */
+html {
+  background-color: var(--color-crema);
 }
 
-/* Oculta el cursor tras unos segundos de inactividad en modo kiosco. */
-body[data-kiosk="idle"] {
-  cursor: none;
+body {
+  /* Solo se bloquea el eje horizontal: los halos del fondo sobresalen a
+     proposito y sin esto asomaria una barra de scroll lateral en el celular. */
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+  /* Nada de `user-select: none`: en el celular la gente copia el nombre de un
+     sabor para preguntarlo por mensaje, y en el televisor no habia raton. */
+}
+
+::selection {
+  background: rgb(147 113 176 / 0.25);
+  color: var(--color-tinta);
+}
+
+/* Anillo de foco visible y de marca: el menu se recorre con el dedo, pero
+   tambien con teclado desde una computadora. */
+:focus-visible {
+  outline: 2px solid var(--color-morado);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* ------------------------------------------------------------------ */
@@ -69,8 +107,9 @@ body[data-kiosk="idle"] {
 /* Glassmorphism muy ligero: apenas una veladura sobre el fondo pastel.
    SIN `backdrop-filter` a proposito. Es de los efectos mas caros que existen:
    obliga al navegador a releer todo lo que hay detras de la tarjeta y
-   desenfocarlo cada vez que algo se repinta, y ademas actua de amplificador
-   (cualquier repintado en la pantalla arrastra a las tres tarjetas).
+   desenfocarlo cada vez que algo se repinta. En una pagina que se recorre con
+   el dedo eso significa desenfocar de nuevo en CADA cuadro del scroll, que es
+   justo donde un celular de gama media se atraganta.
    Sobre un cristal que ya es blanco al 80-90 % el desenfoque no se percibia:
    el aspecto lo da el degradado, el borde claro y la sombra difusa. */
 @utility vidrio {
@@ -88,7 +127,36 @@ body[data-kiosk="idle"] {
   box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.9);
 }
 
+/* La barra pegajosa SI lleva desenfoque: es una franja de unos 70 px, no
+   media pantalla, y el coste se nota cero. A cambio los menus se leen sobre
+   cualquier mancha de color del fondo mientras la carta pasa por debajo. */
+@utility vidrio-barra {
+  background: rgb(255 245 245 / 0.92);
+  border-bottom: 1px solid rgb(147 113 176 / 0.16);
+}
+
+@supports (backdrop-filter: blur(12px)) {
+  .vidrio-barra {
+    background: rgb(255 245 245 / 0.72);
+    backdrop-filter: blur(14px) saturate(1.25);
+  }
+}
+
+/* Oculta la barra de scroll de la fila de menus sin perder el arrastre. */
+@utility sin-barra-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sin-barra-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {

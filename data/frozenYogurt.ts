@@ -17,11 +17,6 @@ export const frozenYogurt: MenuGroup = {
       title: "Frozen Yogurt",
       section: "Tamaños y Toppings",
       layout: "solo",
-      photo: {
-        src: "/productos/frozen-yogurt.png",
-        alt: "Frozen yogurt de GALU con toppings",
-        fallbackIcon: "yogurt",
-      },
       categories: [
         {
           id: "tamanos",

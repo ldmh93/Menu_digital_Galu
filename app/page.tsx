@@ -1,18 +1,21 @@
-import { MenuAutoplay } from "@/components/MenuAutoplay";
-import { ScreenFrame } from "@/components/ScreenFrame";
-import { getPlaylistLabels, getPlaylistScreens } from "@/data/menus";
+import { MenuBrowser } from "@/components/MenuBrowser";
+import { SiteFooter } from "@/components/SiteFooter";
+import { SiteHeader } from "@/components/SiteHeader";
+import { getPlaylistGroups } from "@/data/menus";
 
 /**
- * Pantalla principal del local: reproduce todos los menus en bucle.
- * Es la URL que hay que abrir en el reproductor / TV.
+ * La carta completa. Es la URL que va en el codigo QR de las mesas.
+ *
+ * Todos los menus viven en la misma pagina: en un celular abrir una carta y
+ * volver atras para abrir otra se siente mucho peor que arrastrar el dedo, y
+ * ademas asi la busqueda encuentra a la primera un sabor este donde este.
  */
 export default function Home() {
   return (
-    <ScreenFrame>
-      <MenuAutoplay
-        menus={getPlaylistScreens()}
-        labels={getPlaylistLabels()}
-      />
-    </ScreenFrame>
+    <>
+      <SiteHeader />
+      <MenuBrowser groups={getPlaylistGroups()} />
+      <SiteFooter />
+    </>
   );
 }

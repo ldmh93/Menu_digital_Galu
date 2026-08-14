@@ -11,11 +11,6 @@ export const malteadas: MenuGroup = {
     {
       slug: "malteadas",
       title: "Malteadas",
-      photo: {
-        src: "/productos/malteadas.png",
-        alt: "Malteada de GALU",
-        fallbackIcon: "malteada",
-      },
       categories: [],
     },
   ],

@@ -5,12 +5,13 @@ import { motion } from "framer-motion";
 
 import { site } from "@/config/site";
 import { bajarYAparecer } from "@/lib/motion";
+import { cx } from "@/lib/format";
 
 const RELACION_ASPECTO = 266 / 108; // dimensiones nativas de /public/logo.png
 
 interface LogoProps {
-  /** Ancho renderizado en px del lienzo 1080x1920. */
-  width?: number;
+  /** Clases de ancho. El alto sale solo de la proporcion del archivo. */
+  className?: string;
   priority?: boolean;
 }
 
@@ -19,18 +20,19 @@ interface LogoProps {
  * Se apoya en un halo blanco muy difuso para separarlo del arte del fondo sin
  * necesidad de recuadros ni marcos.
  */
-export function Logo({ width = 330, priority = true }: LogoProps) {
-  const height = Math.round(width / RELACION_ASPECTO);
-
+export function Logo({
+  className = "w-44 sm:w-56 lg:w-64",
+  priority = true,
+}: LogoProps) {
   return (
     <motion.div
       variants={bajarYAparecer}
-      className="relative flex items-center justify-center"
-      style={{ width, height }}
+      className={cx("relative flex items-center justify-center", className)}
+      style={{ aspectRatio: RELACION_ASPECTO }}
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 -m-14 rounded-full"
+        className="absolute inset-0 -m-8 rounded-full sm:-m-12"
         style={{
           background:
             "radial-gradient(circle at 50% 50%, rgb(255 255 255 / 0.55) 0%, rgb(255 255 255 / 0.35) 40%, transparent 70%)",
@@ -39,10 +41,10 @@ export function Logo({ width = 330, priority = true }: LogoProps) {
       <Image
         src={site.logo}
         alt={site.brand}
-        width={width}
-        height={height}
+        width={532}
+        height={216}
         priority={priority}
-        sizes={`${width}px`}
+        sizes="(min-width: 1024px) 16rem, (min-width: 640px) 14rem, 11rem"
         className="relative h-full w-full object-contain"
         draggable={false}
       />

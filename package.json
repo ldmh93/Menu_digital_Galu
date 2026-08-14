@@ -2,13 +2,11 @@
   "name": "galu-menu-digital",
   "version": "1.0.0",
   "private": true,
-  "description": "Menu digital premium para GALU - Bobas, Frozen Yogurt, Ice Rollers y Malteadas",
+  "description": "Menu digital responsivo de GALU - Bobas, Frozen Yogurt, Ice Rollers, Sodas Italianas y Blizz",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "dev:exfat": "set NODE_OPTIONS=--require ./exfat-readlink-fix.cjs&& next dev",
-    "build:exfat": "set NODE_OPTIONS=--require ./exfat-readlink-fix.cjs&& next build",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit"
   },

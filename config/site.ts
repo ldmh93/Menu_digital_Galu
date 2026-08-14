@@ -1,5 +1,5 @@
 /**
- * Configuracion global de la pantalla.
+ * Configuracion global del menu.
  *
  * Todo lo editable por el negocio vive aqui o en /data. Cuando exista el panel
  * administrativo, este objeto es lo unico que hay que reemplazar por un fetch:
@@ -16,25 +16,32 @@ export interface SiteConfig {
   /** Ruta del fondo oficial dentro de /public. NO modificar el arte. */
   background: string;
   /**
-   * Forma de preparacion, bajo el titulo de TODAS las pantallas.
-   * Cadena vacia para ocultarla en todas; una pantalla suelta puede anularla
+   * Forma de preparacion, bajo el titulo de TODOS los menus.
+   * Cadena vacia para ocultarla en todos; un menu suelto puede anularla
    * con `preparation: null` en su archivo de datos.
    */
   preparation: string;
-  /** Segundos que permanece visible cada PANTALLA en modo autoplay. */
-  autoplaySeconds: number;
   /**
-   * Orden de reproduccion (slugs de grupo de /data/menus.ts).
+   * Orden en que aparecen los menus en la pagina (slugs de /data/menus.ts).
    * Los menus sin productos cargados se saltan automaticamente.
    */
   playlist: string[];
-  /** Pie de pantalla. */
+  /** Redes sociales y frase de marca. */
   footer: {
     /** Usuario, el mismo en todas las redes. */
     handle: string;
     /** Redes donde existe ese usuario. Decide que iconos se pintan. */
     networks: SocialNetwork[];
     message: string;
+  };
+  /** Firma de quien desarrolla el sitio. Va en la ultima linea de la pagina. */
+  credits: {
+    studio: string;
+    tagline: string;
+    /** Solo digitos, como se marca en Mexico. */
+    phone: string;
+    /** Prefijo internacional para los enlaces `tel:` y de WhatsApp. */
+    phoneCountryCode: string;
   };
 }
 
@@ -47,9 +54,7 @@ export const site: SiteConfig = {
   logo: "/logo.png",
   background: "/background.svg",
   preparation: "Late o Frapeado",
-  autoplaySeconds: 12,
-  // Bobas aporta 5 pantallas y el resto 1 cada uno: el ciclo dura ~108 s.
-  // Malteadas y Especialidades estan pendientes de datos y se omiten solos.
+  // Malteadas y Especialidades estan pendientes de datos y se omiten solas.
   playlist: [
     "ice-rollers",
     "bobas",
@@ -64,10 +69,29 @@ export const site: SiteConfig = {
     networks: ["instagram", "facebook", "tiktok"],
     message: "Hecho al momento, siempre fresco",
   },
+  credits: {
+    studio: "Creaciones Luis David",
+    tagline: "Soluciones digitales y web",
+    phone: "4171279042",
+    phoneCountryCode: "52",
+  },
 };
 
-/** Dimensiones del lienzo de diseno. Todo se escala a partir de aqui. */
-export const CANVAS = {
-  width: 1080,
-  height: 1920,
-} as const;
+/** Direccion publica de cada red, a partir del usuario configurado. */
+export function socialUrl(network: SocialNetwork): string {
+  const user = site.footer.handle.replace(/^@/, "");
+
+  if (network === "facebook") return `https://facebook.com/${user}`;
+  if (network === "tiktok") return `https://tiktok.com/@${user}`;
+  return `https://instagram.com/${user}`;
+}
+
+/** Telefono en formato internacional, sin espacios: +524171279042 */
+export function phoneE164(): string {
+  return `+${site.credits.phoneCountryCode}${site.credits.phone}`;
+}
+
+/** Telefono agrupado para leerlo de un vistazo: 417 127 9042 */
+export function phoneLegible(): string {
+  return site.credits.phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
+}
