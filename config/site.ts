@@ -54,11 +54,18 @@ export const site: SiteConfig = {
   logo: "/logo.png",
   background: "/background.svg",
   preparation: "Late o Frapeado",
-  // Malteadas y Especialidades estan pendientes de datos y se omiten solas.
+  /*
+   * Orden de la carta. Frozen Yogurt y Bobas van primero porque son el
+   * producto principal del negocio — es lo que dice el propio subtitulo de la
+   * marca. En una pagina que se recorre de arriba abajo, el orden ES la
+   * jerarquia: lo primero que se ve es lo que mas se pide.
+   *
+   * Malteadas y Especialidades estan pendientes de datos y se omiten solas.
+   */
   playlist: [
-    "ice-rollers",
-    "bobas",
     "frozen-yogurt",
+    "bobas",
+    "ice-rollers",
     "sodas-italianas",
     "blizz",
     "malteadas",
