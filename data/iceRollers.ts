@@ -73,7 +73,6 @@ const iceRollersPantalla: MenuScreen = {
         "Kinder Bueno",
         "Lotus",
         "Nutella B‑Ready",
-        "Santa Clara",
         { name: "Yakult", tag: "favorito" },
       ],
     },

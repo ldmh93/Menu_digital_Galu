@@ -30,6 +30,17 @@ const EXTRAS: MenuExtra[] = [
   { name: "Tapioca", price: 15 },
 ];
 
+/**
+ * Forma de preparacion. Es EXCLUSIVA de Bobas: el resto de la carta no se
+ * sirve latte ni frape, asi que `config/site.ts` la deja vacia y solo este
+ * menu la declara.
+ *
+ * Va en los cinco bloques, no solo en el primero: la pastilla la pinta el
+ * titulo del menu, que lee el primer bloque, y si algun dia se reordenan los
+ * bloques la preparacion desapareceria sin que nadie entendiera por que.
+ */
+const PREPARACION = "Latte o Frape";
+
 // ---------------------------------------------------------------------------
 // 1 · Sabores base
 // ---------------------------------------------------------------------------
@@ -37,6 +48,7 @@ const EXTRAS: MenuExtra[] = [
 const bobasSabores: MenuScreen = {
   slug: "bobas",
   title: "Bobas",
+  preparation: PREPARACION,
   section: "Sabores",
   layout: "trio",
   categories: [
@@ -74,7 +86,7 @@ const bobasSabores: MenuScreen = {
         "Coco",
         "Durazno",
         "Frambuesa",
-        { name: "Fresa", note: "$79" },
+        "Fresa",
         "Frutos Rojos",
         "Guanábana",
         "Guayaba",
@@ -112,7 +124,7 @@ const bobasSabores: MenuScreen = {
         "Pistache",
         "Pumpkin Spice",
         "Taro",
-        { name: "Vainilla", note: "$79" },
+        "Vainilla",
         "Velvet Chocolate",
       ],
     },
@@ -128,6 +140,7 @@ const bobasSabores: MenuScreen = {
 const bobasEspeciales: MenuScreen = {
   slug: "bobas-especiales",
   title: "Bobas",
+  preparation: PREPARACION,
   section: "Especiales y Café",
   layout: "duo",
   categories: [
@@ -187,6 +200,7 @@ const bobasEspeciales: MenuScreen = {
 const bobasCombinacionesLeche: MenuScreen = {
   slug: "bobas-combinaciones-leche",
   title: "Bobas",
+  preparation: PREPARACION,
   section: "Combinaciones · Leche y Yogurt",
   layout: "solo",
   categories: [
@@ -263,6 +277,7 @@ const bobasCombinacionesLeche: MenuScreen = {
 const bobasCombinacionesAgua: MenuScreen = {
   slug: "bobas-combinaciones-agua",
   title: "Bobas",
+  preparation: PREPARACION,
   section: "Combinaciones · Agua",
   layout: "feature",
   categories: [
@@ -333,7 +348,8 @@ const bobasCombinacionesAgua: MenuScreen = {
 const bobasMonster: MenuScreen = {
   slug: "bobas-monster",
   title: "Bobas",
-  section: "Monster y Yogurt",
+  preparation: PREPARACION,
+  section: "Monster",
   layout: "feature",
   categories: [
     {

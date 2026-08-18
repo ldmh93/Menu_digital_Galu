@@ -156,9 +156,24 @@ Los acentos disponibles (`accent`) son los colores del fondo oficial:
 `config/site.ts` — subtítulo, orden de los menús, redes sociales y la firma del
 pie. No hay que tocar código para cambiarlos.
 
-`preparation` es la forma de preparación que sale bajo el título de **todos**
-los menús ("Late o Frapeado"). Déjala en `""` para quitarla de todos, o pon
-`preparation: null` en un bloque concreto de `/data` para ocultarla solo ahí.
+`preparation` es la pastilla de forma de preparación que sale bajo el título de
+un menú. En `config/site.ts` va **vacía**: no todo se sirve latte ni frape, y
+anunciarlo donde no aplica confunde al cliente. Cada menú que sí la ofrece la
+declara en su archivo de `/data` — hoy solo **Bobas**, en los cinco bloques:
+
+```ts
+const PREPARACION = "Latte o Frape";   // data/bobas.ts
+
+const bobasSabores: MenuScreen = {
+  title: "Bobas",
+  preparation: PREPARACION,
+  ...
+};
+```
+
+Si algún día la mayoría de los menús la ofreciera, conviene el camino
+contrario: ponerla en `config/site.ts` y marcar con `preparation: null` los
+pocos que no.
 
 `credits` es la firma del desarrollo (nombre, descripción y teléfono). El
 teléfono se convierte solo en un enlace `tel:` marcable.

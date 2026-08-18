@@ -38,7 +38,7 @@ export function MenuSection({ group, highlight, buscando }: MenuSectionProps) {
   const comunes = comunesDelGrupo(group.screens);
   const [primero] = group.screens;
 
-  // La preparacion ("Late o Frapeado") es del menu entero, no de cada bloque.
+  // La preparacion ("Latte o Frape") es del menu entero, no de cada bloque.
   const preparacion =
     primero?.preparation === undefined ? site.preparation : primero.preparation;
 
@@ -93,7 +93,7 @@ export function MenuSection({ group, highlight, buscando }: MenuSectionProps) {
  *
  * Jerarquia:
  *   1. Producto     — "Bobas"                Fredoka SemiBold, ciruela
- *   2. Preparacion  — "Late o Frapeado"      en pastilla
+ *   2. Preparacion  — "Latte o Frape"        en pastilla
  *   3. Detalle      — frase corta            Poppins Light
  *
  * El nivel de "seccion" ("Combinaciones · Agua") ya no vive aqui: ahora

@@ -16,9 +16,12 @@ export interface SiteConfig {
   /** Ruta del fondo oficial dentro de /public. NO modificar el arte. */
   background: string;
   /**
-   * Forma de preparacion, bajo el titulo de TODOS los menus.
-   * Cadena vacia para ocultarla en todos; un menu suelto puede anularla
-   * con `preparation: null` en su archivo de datos.
+   * Forma de preparacion por defecto, bajo el titulo de los menus.
+   *
+   * Va vacia a proposito: no todo se sirve latte ni frape, y anunciarlo en
+   * un menu donde no aplica confunde al cliente. Cada menu que SI la ofrece la
+   * declara en su archivo de `/data` (hoy solo Bobas). Si algun dia la
+   * mayoria la ofreciera, se pone aqui y los que no, con `preparation: null`.
    */
   preparation: string;
   /**
@@ -53,7 +56,8 @@ export const site: SiteConfig = {
   subtitle: "Frozen Yogurt & Bobas",
   logo: "/logo.png",
   background: "/background.svg",
-  preparation: "Late o Frapeado",
+  // Vacia: solo Bobas la declara, en data/bobas.ts.
+  preparation: "",
   /*
    * Orden de la carta. Frozen Yogurt y Bobas van primero porque son el
    * producto principal del negocio — es lo que dice el propio subtitulo de la

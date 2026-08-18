@@ -99,7 +99,7 @@ export interface MenuScreen {
   tagline?: string;
   /**
    * Anula la forma de preparacion de config/site.ts en ESTE bloque.
-   * `null` la oculta (util si un menu no se sirve late ni frapeado).
+   * `null` la oculta (util si un menu no se sirve latte ni frape).
    */
   preparation?: string | null;
   layout?: MenuLayout;
