@@ -13,6 +13,19 @@ export type Accent = "rosa" | "lavanda" | "menta" | "amarillo" | "morado";
 export type ItemTag = "nuevo" | "favorito";
 
 export interface MenuItem {
+  /**
+   * Llave estable del producto: la que usa el panel para saber que renglon
+   * esta editando. No sirve el nombre, porque cambiarlo es justo una de las
+   * cosas que se editan. Opcional para que un producto pueda seguir
+   * declarandose como cadena suelta.
+   */
+  id?: string;
+  /**
+   * Visible en la carta publica. `false` lo apaga sin borrarlo, que es lo que
+   * hace falta cuando un sabor se acaba y vuelve la semana siguiente.
+   * Si no se pone, se da por visible.
+   */
+  active?: boolean;
   name: string;
   /** Ingredientes o composicion. Se muestra bajo el nombre, en letra ligera. */
   description?: string;
@@ -42,6 +55,8 @@ export type Price = number | PriceTier[];
 
 export interface MenuCategory {
   id: string;
+  /** Visible en la carta publica. Apagarla esconde la tarjeta entera. */
+  active?: boolean;
   /** Titulo de la tarjeta: "Agua", "Especiales", "Premium"... */
   name: string;
   /**
@@ -88,6 +103,8 @@ export interface MenuExtra {
 export interface MenuScreen {
   /** Identificador estable, tambien usado como ancla en la pagina. */
   slug: string;
+  /** Visible en la carta publica. Apaga el bloque entero. */
+  active?: boolean;
   /** Titulo grande del menu. */
   title: string;
   /**
@@ -116,6 +133,8 @@ export interface MenuGroup {
   slug: string;
   /** Nombre corto para la barra de navegacion. */
   label: string;
+  /** Visible en la carta publica. Apaga el menu completo. */
+  active?: boolean;
   screens: MenuScreen[];
 }
 

@@ -1,5 +1,10 @@
 /**
- * Configuracion global del menu.
+ * Configuracion global del sitio.
+ *
+ * OJO: el ORDEN de los menus ya no vive aqui. Es contenido editable —se cambia
+ * desde el panel— y por tanto esta en data/contenido.json, junto a la carta.
+ * Lo que queda aqui es lo que no cambia de un dia para otro: la marca, el
+ * fondo y la firma de quien desarrolla.
  *
  * Todo lo editable por el negocio vive aqui o en /data. Cuando exista el panel
  * administrativo, este objeto es lo unico que hay que reemplazar por un fetch:
@@ -24,11 +29,6 @@ export interface SiteConfig {
    * mayoria la ofreciera, se pone aqui y los que no, con `preparation: null`.
    */
   preparation: string;
-  /**
-   * Orden en que aparecen los menus en la pagina (slugs de /data/menus.ts).
-   * Los menus sin productos cargados se saltan automaticamente.
-   */
-  playlist: string[];
   /** Redes sociales y frase de marca. */
   footer: {
     /** Usuario, el mismo en todas las redes. */
@@ -56,25 +56,8 @@ export const site: SiteConfig = {
   subtitle: "Frozen Yogurt & Bobas",
   logo: "/logo.png",
   background: "/background.svg",
-  // Vacia: solo Bobas la declara, en data/bobas.ts.
+  // Vacia: solo Bobas la declara, en su bloque de data/contenido.json.
   preparation: "",
-  /*
-   * Orden de la carta. Frozen Yogurt y Bobas van primero porque son el
-   * producto principal del negocio — es lo que dice el propio subtitulo de la
-   * marca. En una pagina que se recorre de arriba abajo, el orden ES la
-   * jerarquia: lo primero que se ve es lo que mas se pide.
-   *
-   * Malteadas y Especialidades estan pendientes de datos y se omiten solas.
-   */
-  playlist: [
-    "frozen-yogurt",
-    "bobas",
-    "ice-rollers",
-    "sodas-italianas",
-    "blizz",
-    "malteadas",
-    "especialidades",
-  ],
   footer: {
     handle: "@frozen.galu",
     networks: ["instagram", "facebook", "tiktok"],

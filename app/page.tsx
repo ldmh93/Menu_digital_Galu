@@ -10,11 +10,11 @@ import { getPlaylistGroups } from "@/data/menus";
  * volver atras para abrir otra se siente mucho peor que arrastrar el dedo, y
  * ademas asi la busqueda encuentra a la primera un sabor este donde este.
  */
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <SiteHeader />
-      <MenuBrowser groups={getPlaylistGroups()} />
+      <MenuBrowser groups={await getPlaylistGroups()} />
       <SiteFooter />
     </>
   );

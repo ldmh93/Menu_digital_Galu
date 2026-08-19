@@ -20,13 +20,14 @@ interface Params {
  * Con una ruta dinamica basta con anadir el menu a /data y la URL existe sola.
  * Sigue siendo estatica: `generateStaticParams` las genera todas al compilar.
  */
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const group = getGroup(slug);
+  const group = await getGroup(slug);
 
   if (!group) return {};
 
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function MenuPage({ params }: Params) {
   const { slug } = await params;
-  const group = getGroup(slug);
+  const group = await getGroup(slug);
 
   if (!group) notFound();
 

@@ -88,21 +88,25 @@ siendo estáticas.
 
 ## Editar el menú
 
-**Todo el contenido vive en `/data`. Nunca se escriben productos dentro de un
-componente.**
+**Lo normal es editarlo desde el panel, no tocando archivos.** Arranca el
+proyecto y entra a <http://localhost:3000/admin>. Ahí se cambian títulos,
+nombres, precios, descripciones, el color de la cinta de cada tarjeta y el
+orden de los menús, y se agregan, ocultan o eliminan productos. Lo que guardes
+se ve en la carta al momento.
+
+**Todo el contenido vive en `data/contenido.json`. Nunca se escriben productos
+dentro de un componente.**
 
 ```
 data/
-  iceRollers.ts      ← datos reales (1 bloque)
-  bobas.ts           ← datos reales (5 bloques)
-  frozenYogurt.ts    ← datos reales (1 bloque)
-  sodasItalianas.ts  ← datos reales (1 bloque)
-  blizz.ts           ← datos reales (1 bloque)
-  malteadas.ts       ← PENDIENTE, sin productos
-  especialidades.ts  ← PENDIENTE, sin productos
+  contenido.json     ← LA CARTA ENTERA: menús, tarjetas, productos y precios
   types.ts           ← el "esquema" de los datos
-  menus.ts           ← registro y orden de aparición
+  menus.ts           ← lectura para la carta pública (poda lo desactivado)
 ```
+
+Se puede editar el JSON a mano si hace falta, pero el panel evita los errores
+tontos: un id repetido, un precio en cero donde debía no haber precio, o un
+color que no es de la marca.
 
 Cada archivo exporta un **grupo** (`MenuGroup`): un menú puede ocupar un bloque
 o varios. Bobas usa cinco porque son 64 sabores base + 72 combinaciones; todos
@@ -153,27 +157,23 @@ Los acentos disponibles (`accent`) son los colores del fondo oficial:
 
 ### Ajustes globales
 
-`config/site.ts` — subtítulo, orden de los menús, redes sociales y la firma del
-pie. No hay que tocar código para cambiarlos.
+`config/site.ts` — subtítulo, redes sociales y la firma del pie. Es lo que no
+cambia de un día para otro. **El orden de los menús ya no está aquí**: es
+contenido, se edita desde el panel y vive en `data/contenido.json`.
 
 `preparation` es la pastilla de forma de preparación que sale bajo el título de
 un menú. En `config/site.ts` va **vacía**: no todo se sirve latte ni frape, y
 anunciarlo donde no aplica confunde al cliente. Cada menú que sí la ofrece la
-declara en su archivo de `/data` — hoy solo **Bobas**, en los cinco bloques:
+declara en su bloque — hoy solo **Bobas**, en los cinco:
 
-```ts
-const PREPARACION = "Latte o Frape";   // data/bobas.ts
-
-const bobasSabores: MenuScreen = {
-  title: "Bobas",
-  preparation: PREPARACION,
-  ...
-};
+```json
+{ "slug": "bobas", "title": "Bobas", "preparation": "Latte o Frape", … }
 ```
 
-Si algún día la mayoría de los menús la ofreciera, conviene el camino
-contrario: ponerla en `config/site.ts` y marcar con `preparation: null` los
-pocos que no.
+Desde el panel son los tres botones de "Forma de preparación" al editar un
+bloque: heredar la general, poner una propia, u ocultarla. Si algún día la
+mayoría de los menús la ofreciera, conviene el camino contrario: ponerla en
+`config/site.ts` y ocultarla en los pocos que no.
 
 `credits` es la firma del desarrollo (nombre, descripción y teléfono). El
 teléfono se convierte solo en un enlace `tel:` marcable.
@@ -248,14 +248,48 @@ justo cuando el dedo quiere avanzar.
 
 ---
 
-## Preparado para el panel administrativo
+## El panel de administración
 
-Los archivos de `/data` implementan los tipos de `data/types.ts`. Cuando exista
-el panel, basta con:
+Vive en `/admin` y está protegido por contraseña. No se enlaza desde ninguna
+parte de la carta y pide no ser indexado.
 
-1. Convertir `getGroup()` y `getPlaylistGroups()` de `data/menus.ts` en
-   funciones `async` que consulten la base de datos.
-2. Hacer lo mismo con `site` de `config/site.ts`.
+```
+app/admin/
+  entrar/page.tsx    ← la puerta
+  page.tsx           ← los menús y su orden (la jerarquía de la carta)
+  [grupo]/page.tsx   ← un menú por dentro: bloques, tarjetas y productos
+  acciones.ts        ← lo único que puede escribir en el contenido
+  componentes.tsx    ← los formularios
+lib/
+  contenido.ts       ← TODO el acceso a disco pasa por aquí
+  editor.ts          ← las reglas de edición, en funciones puras
+  sesion.ts          ← la cookie firmada
+```
 
-Ningún componente cambia: todos reciben los datos por props y ninguno conoce el
-origen.
+**Para usarlo** copia `.env.example` a `.env.local` y pon una contraseña y un
+secreto. Sin esas dos variables el panel avisa en vez de arrancar a medias.
+
+```bash
+cp .env.example .env.local
+node -e "console.log(require(crypto).randomBytes(32).toString(hex))"
+```
+
+### Dónde funciona y dónde no
+
+El panel guarda escribiendo `data/contenido.json`, así que **funciona cuando
+corre en una computadora** — la tuya, con `npm run dev`. En Vercel el disco es
+de solo lectura: la carta se sirve perfectamente, pero el panel no puede
+guardar y lo avisa en pantalla en vez de fallar al pulsar el botón.
+
+Para editar desde el móvil con el sitio ya publicado hay que mover el contenido
+a una base de datos. Todo el acceso a disco está aislado en `lib/contenido.ts`
+justamente para eso: se reimplementan `leerContenido` y `guardarContenido` y no
+se toca ni el panel ni la carta.
+
+### Comprobarlo
+
+```bash
+node scripts/probar-editor.cjs   # las reglas de edición
+node scripts/probar-panel.cjs    # el navegador de verdad, con el servidor en marcha
+node scripts/verificar-json.cjs  # el JSON sigue siendo la carta original
+```

@@ -1,0 +1,1827 @@
+{
+  "site": {
+    "brand": "GALU",
+    "subtitle": "Frozen Yogurt & Bobas",
+    "logo": "/logo.png",
+    "background": "/background.svg",
+    "preparation": "",
+    "playlist": [
+      "frozen-yogurt",
+      "bobas",
+      "ice-rollers",
+      "sodas-italianas",
+      "blizz",
+      "malteadas",
+      "especialidades"
+    ],
+    "footer": {
+      "handle": "@frozen.galu",
+      "networks": [
+        "instagram",
+        "facebook",
+        "tiktok"
+      ],
+      "message": "Hecho al momento, siempre fresco"
+    },
+    "credits": {
+      "studio": "Creaciones Luis David",
+      "tagline": "Soluciones digitales y web",
+      "phone": "4171279042",
+      "phoneCountryCode": "52"
+    }
+  },
+  "groups": [
+    {
+      "slug": "ice-rollers",
+      "label": "Ice Rollers",
+      "active": true,
+      "screens": [
+        {
+          "slug": "ice-rollers",
+          "title": "Ice Rollers",
+          "section": "Helado Enrollado",
+          "layout": "feature",
+          "categories": [
+            {
+              "id": "clasicos",
+              "name": "Clásicos",
+              "price": 60,
+              "description": "Sabores de siempre",
+              "accent": "rosa",
+              "items": [
+                {
+                  "id": "clasicos-arandanos",
+                  "active": true,
+                  "name": "Arándanos"
+                },
+                {
+                  "id": "clasicos-cafe",
+                  "active": true,
+                  "name": "Café"
+                },
+                {
+                  "id": "clasicos-cajeta",
+                  "active": true,
+                  "name": "Cajeta"
+                },
+                {
+                  "id": "clasicos-cereza",
+                  "active": true,
+                  "name": "Cereza"
+                },
+                {
+                  "id": "clasicos-coco",
+                  "active": true,
+                  "name": "Coco"
+                },
+                {
+                  "id": "clasicos-durazno",
+                  "active": true,
+                  "name": "Durazno"
+                },
+                {
+                  "id": "clasicos-fresa",
+                  "active": true,
+                  "name": "Fresa"
+                },
+                {
+                  "id": "clasicos-frutos-rojos",
+                  "active": true,
+                  "name": "Frutos Rojos"
+                },
+                {
+                  "id": "clasicos-guanabana",
+                  "active": true,
+                  "name": "Guanábana"
+                },
+                {
+                  "id": "clasicos-guayaba",
+                  "active": true,
+                  "name": "Guayaba"
+                },
+                {
+                  "id": "clasicos-kiwi",
+                  "active": true,
+                  "name": "Kiwi"
+                },
+                {
+                  "id": "clasicos-mandarina",
+                  "active": true,
+                  "name": "Mandarina"
+                },
+                {
+                  "id": "clasicos-mango",
+                  "active": true,
+                  "name": "Mango"
+                },
+                {
+                  "id": "clasicos-manzana-verde",
+                  "active": true,
+                  "name": "Manzana Verde"
+                },
+                {
+                  "id": "clasicos-mazapan",
+                  "active": true,
+                  "name": "Mazapán"
+                },
+                {
+                  "id": "clasicos-mora-azul",
+                  "active": true,
+                  "name": "Mora Azul"
+                },
+                {
+                  "id": "clasicos-nuez",
+                  "active": true,
+                  "name": "Nuez"
+                },
+                {
+                  "id": "clasicos-oreo",
+                  "active": true,
+                  "name": "Oreo"
+                },
+                {
+                  "id": "clasicos-pina-colada",
+                  "active": true,
+                  "name": "Piña Colada"
+                },
+                {
+                  "id": "clasicos-sandia",
+                  "active": true,
+                  "name": "Sandía"
+                },
+                {
+                  "id": "clasicos-vainilla",
+                  "active": true,
+                  "name": "Vainilla"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "especiales",
+              "name": "Especiales",
+              "price": 70,
+              "description": "Con tu dulce favorito",
+              "accent": "lavanda",
+              "items": [
+                {
+                  "id": "especiales-canelitas",
+                  "active": true,
+                  "name": "Canelitas"
+                },
+                {
+                  "id": "especiales-duvalin",
+                  "active": true,
+                  "name": "Duvalín"
+                },
+                {
+                  "id": "especiales-ferrero",
+                  "active": true,
+                  "name": "Ferrero"
+                },
+                {
+                  "id": "especiales-gansito",
+                  "active": true,
+                  "name": "Gansito"
+                },
+                {
+                  "id": "especiales-hershey-s",
+                  "active": true,
+                  "name": "Hershey's"
+                },
+                {
+                  "id": "especiales-kinder-chocolate",
+                  "active": true,
+                  "name": "Kinder Chocolate"
+                },
+                {
+                  "id": "especiales-kinder-delice",
+                  "active": true,
+                  "name": "Kinder Delice"
+                },
+                {
+                  "id": "especiales-m-m-s",
+                  "active": true,
+                  "name": "M&M's"
+                },
+                {
+                  "id": "especiales-nutella",
+                  "active": true,
+                  "name": "Nutella"
+                },
+                {
+                  "id": "especiales-pinguinos",
+                  "active": true,
+                  "name": "Pingüinos"
+                },
+                {
+                  "id": "especiales-rompope",
+                  "active": true,
+                  "name": "Rompope"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "premium",
+              "name": "Premium",
+              "price": 80,
+              "description": "Lo más consentido",
+              "accent": "menta",
+              "items": [
+                {
+                  "id": "premium-baileys",
+                  "active": true,
+                  "name": "Baileys"
+                },
+                {
+                  "id": "premium-chocolate-dubai",
+                  "active": true,
+                  "name": "Chocolate Dubái",
+                  "tag": "nuevo"
+                },
+                {
+                  "id": "premium-conejito-turin",
+                  "active": true,
+                  "name": "Conejito Turín"
+                },
+                {
+                  "id": "premium-kinder-bueno",
+                  "active": true,
+                  "name": "Kinder Bueno"
+                },
+                {
+                  "id": "premium-lotus",
+                  "active": true,
+                  "name": "Lotus"
+                },
+                {
+                  "id": "premium-nutella-b-ready",
+                  "active": true,
+                  "name": "Nutella B‑Ready"
+                },
+                {
+                  "id": "premium-yakult",
+                  "active": true,
+                  "name": "Yakult",
+                  "tag": "favorito"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "footnote": "Todos incluyen 2 toppings a elegir",
+          "active": true
+        }
+      ]
+    },
+    {
+      "slug": "bobas",
+      "label": "Bobas",
+      "active": true,
+      "screens": [
+        {
+          "slug": "bobas",
+          "title": "Bobas",
+          "preparation": "Latte o Frape",
+          "section": "Sabores",
+          "layout": "trio",
+          "categories": [
+            {
+              "id": "agua",
+              "name": "Agua",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 72
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Base de agua",
+              "accent": "menta",
+              "items": [
+                {
+                  "id": "agua-cereza",
+                  "active": true,
+                  "name": "Cereza"
+                },
+                {
+                  "id": "agua-fresa-sandia",
+                  "active": true,
+                  "name": "Fresa Sandía"
+                },
+                {
+                  "id": "agua-kiwi",
+                  "active": true,
+                  "name": "Kiwi"
+                },
+                {
+                  "id": "agua-limonada-rosa",
+                  "active": true,
+                  "name": "Limonada Rosa"
+                },
+                {
+                  "id": "agua-lychee",
+                  "active": true,
+                  "name": "Lychee"
+                },
+                {
+                  "id": "agua-mandarina",
+                  "active": true,
+                  "name": "Mandarina"
+                },
+                {
+                  "id": "agua-mango-enchilado",
+                  "active": true,
+                  "name": "Mango Enchilado"
+                },
+                {
+                  "id": "agua-melon-verde",
+                  "active": true,
+                  "name": "Melón Verde"
+                },
+                {
+                  "id": "agua-naranja",
+                  "active": true,
+                  "name": "Naranja"
+                },
+                {
+                  "id": "agua-pelon-pelonete",
+                  "active": true,
+                  "name": "Pelón Pelonete"
+                },
+                {
+                  "id": "agua-pepino-con-limon",
+                  "active": true,
+                  "name": "Pepino con Limón"
+                },
+                {
+                  "id": "agua-sandia",
+                  "active": true,
+                  "name": "Sandía"
+                },
+                {
+                  "id": "agua-pina",
+                  "active": true,
+                  "name": "Piña"
+                },
+                {
+                  "id": "agua-uva",
+                  "active": true,
+                  "name": "Uva"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "agua-leche-yogurt",
+              "name": "Agua, Leche o Yogurt",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 72
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Tú eliges la base",
+              "accent": "rosa",
+              "items": [
+                {
+                  "id": "agua-leche-yogurt-arandanos",
+                  "active": true,
+                  "name": "Arándanos"
+                },
+                {
+                  "id": "agua-leche-yogurt-coco",
+                  "active": true,
+                  "name": "Coco"
+                },
+                {
+                  "id": "agua-leche-yogurt-durazno",
+                  "active": true,
+                  "name": "Durazno"
+                },
+                {
+                  "id": "agua-leche-yogurt-frambuesa",
+                  "active": true,
+                  "name": "Frambuesa"
+                },
+                {
+                  "id": "agua-leche-yogurt-fresa",
+                  "active": true,
+                  "name": "Fresa"
+                },
+                {
+                  "id": "agua-leche-yogurt-frutos-rojos",
+                  "active": true,
+                  "name": "Frutos Rojos"
+                },
+                {
+                  "id": "agua-leche-yogurt-guanabana",
+                  "active": true,
+                  "name": "Guanábana"
+                },
+                {
+                  "id": "agua-leche-yogurt-guayaba",
+                  "active": true,
+                  "name": "Guayaba"
+                },
+                {
+                  "id": "agua-leche-yogurt-mamey",
+                  "active": true,
+                  "name": "Mamey"
+                },
+                {
+                  "id": "agua-leche-yogurt-mango",
+                  "active": true,
+                  "name": "Mango"
+                },
+                {
+                  "id": "agua-leche-yogurt-manzana-verde",
+                  "active": true,
+                  "name": "Manzana Verde"
+                },
+                {
+                  "id": "agua-leche-yogurt-maracuya",
+                  "active": true,
+                  "name": "Maracuyá"
+                },
+                {
+                  "id": "agua-leche-yogurt-melon",
+                  "active": true,
+                  "name": "Melón"
+                },
+                {
+                  "id": "agua-leche-yogurt-mora-azul",
+                  "active": true,
+                  "name": "Mora Azul"
+                },
+                {
+                  "id": "agua-leche-yogurt-pina-colada",
+                  "active": true,
+                  "name": "Piña Colada"
+                },
+                {
+                  "id": "agua-leche-yogurt-ponche",
+                  "active": true,
+                  "name": "Ponche"
+                },
+                {
+                  "id": "agua-leche-yogurt-tropical",
+                  "active": true,
+                  "name": "Tropical"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "leche-yogurt",
+              "name": "Leche o Yogurt",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 72
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Cremosas",
+              "accent": "lavanda",
+              "items": [
+                {
+                  "id": "leche-yogurt-cafe",
+                  "active": true,
+                  "name": "Café"
+                },
+                {
+                  "id": "leche-yogurt-cajeta",
+                  "active": true,
+                  "name": "Cajeta"
+                },
+                {
+                  "id": "leche-yogurt-capuccino",
+                  "active": true,
+                  "name": "Capuccino"
+                },
+                {
+                  "id": "leche-yogurt-caramelo",
+                  "active": true,
+                  "name": "Caramelo"
+                },
+                {
+                  "id": "leche-yogurt-chai",
+                  "active": true,
+                  "name": "Chai"
+                },
+                {
+                  "id": "leche-yogurt-chocolate-blanco",
+                  "active": true,
+                  "name": "Chocolate Blanco"
+                },
+                {
+                  "id": "leche-yogurt-fresas-con-crema",
+                  "active": true,
+                  "name": "Fresas con Crema"
+                },
+                {
+                  "id": "leche-yogurt-galleta-oreo",
+                  "active": true,
+                  "name": "Galleta Oreo"
+                },
+                {
+                  "id": "leche-yogurt-horchata",
+                  "active": true,
+                  "name": "Horchata"
+                },
+                {
+                  "id": "leche-yogurt-matcha",
+                  "active": true,
+                  "name": "Matcha"
+                },
+                {
+                  "id": "leche-yogurt-mazapan",
+                  "active": true,
+                  "name": "Mazapán"
+                },
+                {
+                  "id": "leche-yogurt-nuez",
+                  "active": true,
+                  "name": "Nuez"
+                },
+                {
+                  "id": "leche-yogurt-pay-de-limon",
+                  "active": true,
+                  "name": "Pay de Limón"
+                },
+                {
+                  "id": "leche-yogurt-pistache",
+                  "active": true,
+                  "name": "Pistache"
+                },
+                {
+                  "id": "leche-yogurt-pumpkin-spice",
+                  "active": true,
+                  "name": "Pumpkin Spice"
+                },
+                {
+                  "id": "leche-yogurt-taro",
+                  "active": true,
+                  "name": "Taro"
+                },
+                {
+                  "id": "leche-yogurt-vainilla",
+                  "active": true,
+                  "name": "Vainilla"
+                },
+                {
+                  "id": "leche-yogurt-velvet-chocolate",
+                  "active": true,
+                  "name": "Velvet Chocolate"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "footnote": "Todas disponibles en 16 oz y 24 oz",
+          "extras": [
+            {
+              "name": "Leche vegetal",
+              "price": 10
+            },
+            {
+              "name": "Pops",
+              "price": 15
+            },
+            {
+              "name": "Jellys",
+              "price": 15
+            },
+            {
+              "name": "Tapioca",
+              "price": 15
+            }
+          ],
+          "active": true
+        },
+        {
+          "slug": "bobas-especiales",
+          "title": "Bobas",
+          "preparation": "Latte o Frape",
+          "section": "Especiales y Café",
+          "layout": "duo",
+          "categories": [
+            {
+              "id": "leche-yogurt-especiales",
+              "name": "Leche o Yogurt",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 79
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Especiales",
+              "accent": "amarillo",
+              "items": [
+                {
+                  "id": "leche-yogurt-especiales-algodon-de-azucar",
+                  "active": true,
+                  "name": "Algodón de Azúcar"
+                },
+                {
+                  "id": "leche-yogurt-especiales-baileys",
+                  "active": true,
+                  "name": "Baileys"
+                },
+                {
+                  "id": "leche-yogurt-especiales-cheescake",
+                  "active": true,
+                  "name": "Cheescake"
+                },
+                {
+                  "id": "leche-yogurt-especiales-chicle",
+                  "active": true,
+                  "name": "Chicle"
+                },
+                {
+                  "id": "leche-yogurt-especiales-chocolate-negro",
+                  "active": true,
+                  "name": "Chocolate Negro"
+                },
+                {
+                  "id": "leche-yogurt-especiales-chocomenta",
+                  "active": true,
+                  "name": "Chocomenta"
+                },
+                {
+                  "id": "leche-yogurt-especiales-chocoreta",
+                  "active": true,
+                  "name": "Chocoreta"
+                },
+                {
+                  "id": "leche-yogurt-especiales-ferrero",
+                  "active": true,
+                  "name": "Ferrero"
+                },
+                {
+                  "id": "leche-yogurt-especiales-lotus",
+                  "active": true,
+                  "name": "Lotus"
+                },
+                {
+                  "id": "leche-yogurt-especiales-milk-tea",
+                  "active": true,
+                  "name": "Milk Tea"
+                },
+                {
+                  "id": "leche-yogurt-especiales-mocha",
+                  "active": true,
+                  "name": "Mocha"
+                },
+                {
+                  "id": "leche-yogurt-especiales-nutella",
+                  "active": true,
+                  "name": "Nutella"
+                },
+                {
+                  "id": "leche-yogurt-especiales-rompope",
+                  "active": true,
+                  "name": "Rompope"
+                },
+                {
+                  "id": "leche-yogurt-especiales-turin",
+                  "active": true,
+                  "name": "Turín"
+                },
+                {
+                  "id": "leche-yogurt-especiales-yakult",
+                  "active": true,
+                  "name": "Yakult",
+                  "tag": "favorito"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "los-de-cafe",
+              "name": "Los de Café",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 79
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "accent": "morado",
+              "items": [
+                {
+                  "id": "los-de-cafe-coffe-chainila",
+                  "active": true,
+                  "name": "Coffe Chainila",
+                  "description": "Café · Chai · Vainilla"
+                },
+                {
+                  "id": "los-de-cafe-coffe-pumpkin",
+                  "active": true,
+                  "name": "Coffe Pumpkin",
+                  "description": "Café · Pumpkin Spice"
+                },
+                {
+                  "id": "los-de-cafe-coffe-wonkas",
+                  "active": true,
+                  "name": "Coffe Wonkas",
+                  "description": "Café · Caramelo · Nieve de Vainilla · Hershey's"
+                },
+                {
+                  "id": "los-de-cafe-french-coffe",
+                  "active": true,
+                  "name": "French Coffe",
+                  "description": "Café · Vainilla · Cajeta · Canela"
+                },
+                {
+                  "id": "los-de-cafe-pistachio-dream",
+                  "active": true,
+                  "name": "Pistachio Dream",
+                  "description": "Café · Pistache"
+                },
+                {
+                  "id": "los-de-cafe-velvet-mocha",
+                  "active": true,
+                  "name": "Velvet Mocha",
+                  "description": "Mocha · Velvet Chocolate"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "footnote": "Todas disponibles en 16 oz y 24 oz",
+          "extras": [
+            {
+              "name": "Leche vegetal",
+              "price": 10
+            },
+            {
+              "name": "Pops",
+              "price": 15
+            },
+            {
+              "name": "Jellys",
+              "price": 15
+            },
+            {
+              "name": "Tapioca",
+              "price": 15
+            }
+          ],
+          "active": true
+        },
+        {
+          "slug": "bobas-combinaciones-leche",
+          "title": "Bobas",
+          "preparation": "Latte o Frape",
+          "section": "Combinaciones · Leche y Yogurt",
+          "layout": "solo",
+          "categories": [
+            {
+              "id": "combinaciones-leche-yogurt",
+              "name": "Leche o Yogurt",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 79
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Recetas de la casa",
+              "accent": "rosa",
+              "items": [
+                {
+                  "id": "combinaciones-leche-yogurt-banana-beach",
+                  "active": true,
+                  "name": "Banana Beach",
+                  "description": "Coco · Plátano"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-banana-split",
+                  "active": true,
+                  "name": "Banana Split",
+                  "description": "Plátano · Hershey's · Nieve de Vainilla"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-banani",
+                  "active": true,
+                  "name": "Banani",
+                  "description": "Plátano · Cacahuate · Nieve de Vainilla"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-bananutella",
+                  "active": true,
+                  "name": "Bananutella",
+                  "description": "Nutella · Plátano · Hershey's"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-carameli",
+                  "active": true,
+                  "name": "Carameli",
+                  "description": "Cajeta · Caramelo · Nieve de Vainilla"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-caribean",
+                  "active": true,
+                  "name": "Caribean",
+                  "description": "Mango · Coco · Jelly de Mango"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-chai-mood",
+                  "active": true,
+                  "name": "Chai Mood",
+                  "description": "Chai · Mocha"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-chocochip",
+                  "active": true,
+                  "name": "Chocochip",
+                  "description": "Chips Ahoy · Cajeta · Nieve de Chocolate"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-coco-cocoa",
+                  "active": true,
+                  "name": "Coco Cocoa",
+                  "description": "Chocolate · Coco"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-cocoa-bomb",
+                  "active": true,
+                  "name": "Cocoa Bomb",
+                  "description": "Brownie · Hershey's · Nieve de Vainilla"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-karyche",
+                  "active": true,
+                  "name": "Karyche",
+                  "description": "Nutella · Nieve de Chocolate · Oreo triturado"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-mocha-nut",
+                  "active": true,
+                  "name": "Mocha Nut",
+                  "description": "Nuez · Mocha"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-monkey-choco",
+                  "active": true,
+                  "name": "Monkey Choco",
+                  "description": "Chocolate · Plátano"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-napolitan",
+                  "active": true,
+                  "name": "Napolitan",
+                  "description": "Fresa · Chocolate Blanco · Vainilla"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-nutty-brown",
+                  "active": true,
+                  "name": "Nutty Brown",
+                  "description": "Nuez · Chocolate"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-sugar-berry",
+                  "active": true,
+                  "name": "Sugar Berry",
+                  "description": "Fresa · Lechera"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-sugar-matcha",
+                  "active": true,
+                  "name": "Sugar Matcha",
+                  "description": "Matcha · Lechera"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-tropical-banana",
+                  "active": true,
+                  "name": "Tropical Banana",
+                  "description": "Plátano · Coco"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-tropical-berry",
+                  "active": true,
+                  "name": "Tropical Berry",
+                  "description": "Fresa · Mora Azul · Plátano · Nieve de Vainilla"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-vanchuts",
+                  "active": true,
+                  "name": "Vanchuts",
+                  "description": "Nutella · Cacahuate · Nieve de Vainilla"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-vanila",
+                  "active": true,
+                  "name": "Vanila",
+                  "description": "Nutella · Nieve de Vainilla · Hershey's"
+                },
+                {
+                  "id": "combinaciones-leche-yogurt-vanilla-dream",
+                  "active": true,
+                  "name": "Vanilla Dream",
+                  "description": "Plátano · Vainilla"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "footnote": "Todas disponibles en 16 oz y 24 oz",
+          "extras": [
+            {
+              "name": "Leche vegetal",
+              "price": 10
+            },
+            {
+              "name": "Pops",
+              "price": 15
+            },
+            {
+              "name": "Jellys",
+              "price": 15
+            },
+            {
+              "name": "Tapioca",
+              "price": 15
+            }
+          ],
+          "active": true
+        },
+        {
+          "slug": "bobas-combinaciones-agua",
+          "title": "Bobas",
+          "preparation": "Latte o Frape",
+          "section": "Combinaciones · Agua",
+          "layout": "feature",
+          "categories": [
+            {
+              "id": "combinaciones-agua",
+              "name": "Agua",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 79
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Frescas y cítricas",
+              "accent": "menta",
+              "items": [
+                {
+                  "id": "combinaciones-agua-bitter-boba",
+                  "active": true,
+                  "name": "Bitter Boba",
+                  "description": "Tamarindo · Mango · Limón · Chamoy"
+                },
+                {
+                  "id": "combinaciones-agua-carnival",
+                  "active": true,
+                  "name": "Carnival",
+                  "description": "Piña · Fresa · Coco"
+                },
+                {
+                  "id": "combinaciones-agua-cherry-coco",
+                  "active": true,
+                  "name": "Cherry Coco",
+                  "description": "Coco · Cereza"
+                },
+                {
+                  "id": "combinaciones-agua-citrix",
+                  "active": true,
+                  "name": "Citrix",
+                  "description": "Kiwi · Mora Azul · Fresa"
+                },
+                {
+                  "id": "combinaciones-agua-fresh-lemon",
+                  "active": true,
+                  "name": "Fresh Lemon",
+                  "description": "Fresa · Pepino Limón"
+                },
+                {
+                  "id": "combinaciones-agua-fresh-mango",
+                  "active": true,
+                  "name": "Fresh Mango",
+                  "description": "Mango · Pepino Limón"
+                },
+                {
+                  "id": "combinaciones-agua-freslly",
+                  "active": true,
+                  "name": "Freslly",
+                  "description": "Fresa · Jelly de Lychee"
+                },
+                {
+                  "id": "combinaciones-agua-green-boba",
+                  "active": true,
+                  "name": "Green Boba",
+                  "description": "Kiwi · Pepino Limón · Jelly Manzana Verde"
+                },
+                {
+                  "id": "combinaciones-agua-jelly-mango",
+                  "active": true,
+                  "name": "Jelly Mango",
+                  "description": "Mango · Jelly de Mango"
+                },
+                {
+                  "id": "combinaciones-agua-mango-beach",
+                  "active": true,
+                  "name": "Mango Beach",
+                  "description": "Mango · Piña · Chamoy"
+                },
+                {
+                  "id": "combinaciones-agua-maui-mango",
+                  "active": true,
+                  "name": "Maui Mango",
+                  "description": "Mango · Chamoy · Limón"
+                },
+                {
+                  "id": "combinaciones-agua-paraiso",
+                  "active": true,
+                  "name": "Paraíso",
+                  "description": "Mango · Coco · Piña"
+                },
+                {
+                  "id": "combinaciones-agua-passion-fruit",
+                  "active": true,
+                  "name": "Passion Fruit",
+                  "description": "Maracuyá · Jelly de Lychee"
+                },
+                {
+                  "id": "combinaciones-agua-red-rush",
+                  "active": true,
+                  "name": "Red Rush",
+                  "description": "Fresa · Chamoy · Jelly de Fresa"
+                },
+                {
+                  "id": "combinaciones-agua-sunset",
+                  "active": true,
+                  "name": "Sunset",
+                  "description": "Fresa · Naranja · Cereza"
+                },
+                {
+                  "id": "combinaciones-agua-yellow-rush",
+                  "active": true,
+                  "name": "Yellow Rush",
+                  "description": "Mango · Chamoy · Jelly de Mango"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "combinaciones-mixtas",
+              "name": "Leche, Agua o Yogurt",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 79
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Tú eliges la base",
+              "accent": "lavanda",
+              "items": [
+                {
+                  "id": "combinaciones-mixtas-berry-bloom",
+                  "active": true,
+                  "name": "Berry Bloom",
+                  "description": "Arándano · Lychee"
+                },
+                {
+                  "id": "combinaciones-mixtas-green-splash",
+                  "active": true,
+                  "name": "Green Splash",
+                  "description": "Kiwi · Manzana Verde"
+                },
+                {
+                  "id": "combinaciones-mixtas-island-breeze",
+                  "active": true,
+                  "name": "Island Breeze",
+                  "description": "Piña · Coco"
+                },
+                {
+                  "id": "combinaciones-mixtas-kiwi-berry",
+                  "active": true,
+                  "name": "Kiwi Berry",
+                  "description": "Fresa · Kiwi"
+                },
+                {
+                  "id": "combinaciones-mixtas-peach-kiss",
+                  "active": true,
+                  "name": "Peach Kiss",
+                  "description": "Durazno · Lychee"
+                },
+                {
+                  "id": "combinaciones-mixtas-pink-lychee",
+                  "active": true,
+                  "name": "Pink Lychee",
+                  "description": "Lychee · Frambuesa"
+                },
+                {
+                  "id": "combinaciones-mixtas-pink-wave",
+                  "active": true,
+                  "name": "Pink Wave",
+                  "description": "Frambuesa · Coco"
+                },
+                {
+                  "id": "combinaciones-mixtas-purple-sunset",
+                  "active": true,
+                  "name": "Purple Sunset",
+                  "description": "Arándano · Fruta de la Pasión"
+                },
+                {
+                  "id": "combinaciones-mixtas-tropical-twist",
+                  "active": true,
+                  "name": "Tropical Twist",
+                  "description": "Manzana Verde · Fruta de la Pasión"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "footnote": "Todas disponibles en 16 oz y 24 oz",
+          "extras": [
+            {
+              "name": "Leche vegetal",
+              "price": 10
+            },
+            {
+              "name": "Pops",
+              "price": 15
+            },
+            {
+              "name": "Jellys",
+              "price": 15
+            },
+            {
+              "name": "Tapioca",
+              "price": 15
+            }
+          ],
+          "active": true
+        },
+        {
+          "slug": "bobas-monster",
+          "title": "Bobas",
+          "preparation": "Latte o Frape",
+          "section": "Monster",
+          "layout": "feature",
+          "categories": [
+            {
+              "id": "los-de-monster",
+              "name": "Monster",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 79
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "description": "Con energizante",
+              "accent": "amarillo",
+              "items": [
+                {
+                  "id": "los-de-monster-boba-mix",
+                  "active": true,
+                  "name": "Boba Mix",
+                  "description": "Piña · Mora Azul · Limón"
+                },
+                {
+                  "id": "los-de-monster-boba-power",
+                  "active": true,
+                  "name": "Boba Power",
+                  "description": "Naranja · Mango"
+                },
+                {
+                  "id": "los-de-monster-boba-punch",
+                  "active": true,
+                  "name": "Boba Punch",
+                  "description": "Piña · Mora Azul · Kiwi"
+                },
+                {
+                  "id": "los-de-monster-caipirina",
+                  "active": true,
+                  "name": "Caipirina",
+                  "description": "Fresa · Piña · Kiwi"
+                },
+                {
+                  "id": "los-de-monster-crazy-boba",
+                  "active": true,
+                  "name": "Crazy Boba",
+                  "description": "Mango · Naranja · Limón"
+                },
+                {
+                  "id": "los-de-monster-frankenstein",
+                  "active": true,
+                  "name": "Frankenstein",
+                  "description": "Piña · Lychee · Kiwi"
+                },
+                {
+                  "id": "los-de-monster-golden-green",
+                  "active": true,
+                  "name": "Golden Green",
+                  "description": "Mango · Manzana Verde"
+                },
+                {
+                  "id": "los-de-monster-jungle-fury",
+                  "active": true,
+                  "name": "Jungle Fury",
+                  "description": "Limón · Mango · Piña"
+                },
+                {
+                  "id": "los-de-monster-lunatic",
+                  "active": true,
+                  "name": "Lunatic",
+                  "description": "Kiwi · Pepino Limón · Jelly Manzana Verde"
+                },
+                {
+                  "id": "los-de-monster-red-boba",
+                  "active": true,
+                  "name": "Red Boba",
+                  "description": "Fresa · Mora Azul · Frambuesa"
+                },
+                {
+                  "id": "los-de-monster-red-dragon",
+                  "active": true,
+                  "name": "Red Dragon",
+                  "description": "Fresa · Lychee · Chamoy · Tabasco"
+                },
+                {
+                  "id": "los-de-monster-super-mango",
+                  "active": true,
+                  "name": "Super Mango",
+                  "description": "Mango · Jelly de Lychee"
+                },
+                {
+                  "id": "los-de-monster-tropical-monster",
+                  "active": true,
+                  "name": "Tropical Monster",
+                  "description": "Fresa · Mango · Kiwi"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "los-de-yogurt",
+              "name": "Los de Yogurt",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 79
+                },
+                {
+                  "label": "24 oz",
+                  "value": 89
+                }
+              ],
+              "accent": "rosa",
+              "items": [
+                {
+                  "id": "los-de-yogurt-cream-berry",
+                  "active": true,
+                  "name": "Cream Berry",
+                  "description": "Plátano · Fresa · Mora Azul"
+                },
+                {
+                  "id": "los-de-yogurt-green-tai",
+                  "active": true,
+                  "name": "Green Tai",
+                  "description": "Taro · Chai"
+                },
+                {
+                  "id": "los-de-yogurt-mantcha",
+                  "active": true,
+                  "name": "Mantcha",
+                  "description": "Matcha · Mango"
+                },
+                {
+                  "id": "los-de-yogurt-oreo-twist",
+                  "active": true,
+                  "name": "Oreo Twist",
+                  "description": "Oreo · Vainilla"
+                },
+                {
+                  "id": "los-de-yogurt-strawberry-chai",
+                  "active": true,
+                  "name": "Strawberry Chai",
+                  "description": "Chai · Vainilla · Fresa"
+                },
+                {
+                  "id": "los-de-yogurt-taro-dream",
+                  "active": true,
+                  "name": "Taro Dream",
+                  "description": "Taro · Cheescake"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "footnote": "Todas disponibles en 16 oz y 24 oz",
+          "extras": [
+            {
+              "name": "Leche vegetal",
+              "price": 10
+            },
+            {
+              "name": "Pops",
+              "price": 15
+            },
+            {
+              "name": "Jellys",
+              "price": 15
+            },
+            {
+              "name": "Tapioca",
+              "price": 15
+            }
+          ],
+          "active": true
+        }
+      ]
+    },
+    {
+      "slug": "frozen-yogurt",
+      "label": "Frozen Yogurt",
+      "active": true,
+      "screens": [
+        {
+          "slug": "frozen-yogurt",
+          "title": "Frozen Yogurt",
+          "section": "Tamaños y Toppings",
+          "layout": "solo",
+          "categories": [
+            {
+              "id": "tamanos",
+              "name": "Tamaños",
+              "description": "Toppings incluidos en cada tamaño",
+              "accent": "menta",
+              "columns": 1,
+              "items": [
+                {
+                  "id": "tamanos-cono",
+                  "active": true,
+                  "name": "Cono",
+                  "description": "1 topping · no incluye fruta",
+                  "price": 35
+                },
+                {
+                  "id": "tamanos-mini",
+                  "active": true,
+                  "name": "Mini",
+                  "description": "2 toppings · no incluye fruta",
+                  "price": 40
+                },
+                {
+                  "id": "tamanos-chico",
+                  "active": true,
+                  "name": "Chico",
+                  "description": "3 toppings · máx. 2 frutas",
+                  "price": 55
+                },
+                {
+                  "id": "tamanos-mediano",
+                  "active": true,
+                  "name": "Mediano",
+                  "description": "3 toppings · máx. 2 frutas",
+                  "price": 65
+                },
+                {
+                  "id": "tamanos-grande",
+                  "active": true,
+                  "name": "Grande",
+                  "description": "4 toppings · máx. 3 frutas",
+                  "price": 75
+                },
+                {
+                  "id": "tamanos-medio-litro",
+                  "active": true,
+                  "name": "Medio Litro",
+                  "description": "4 toppings · máx. 3 frutas",
+                  "price": 140
+                },
+                {
+                  "id": "tamanos-litro",
+                  "active": true,
+                  "name": "Litro",
+                  "description": "4 toppings · máx. 3 frutas",
+                  "price": 260
+                }
+              ],
+              "active": true
+            }
+          ],
+          "extras": [
+            {
+              "name": "Topping",
+              "price": 10
+            },
+            {
+              "name": "Fruta",
+              "price": 12
+            },
+            {
+              "name": "Topping premium",
+              "price": 15
+            }
+          ],
+          "active": true
+        }
+      ]
+    },
+    {
+      "slug": "sodas-italianas",
+      "label": "Sodas Italianas",
+      "active": true,
+      "screens": [
+        {
+          "slug": "sodas-italianas",
+          "title": "Sodas Italianas",
+          "section": "Todos los Sabores",
+          "layout": "solo",
+          "categories": [
+            {
+              "id": "sabores",
+              "name": "Sabores",
+              "price": [
+                {
+                  "label": "16 oz",
+                  "value": 65
+                },
+                {
+                  "label": "24 oz",
+                  "value": 75
+                }
+              ],
+              "accent": "lavanda",
+              "columns": 2,
+              "items": [
+                {
+                  "id": "sabores-lavanda",
+                  "active": true,
+                  "name": "Lavanda"
+                },
+                {
+                  "id": "sabores-taro",
+                  "active": true,
+                  "name": "Taro"
+                },
+                {
+                  "id": "sabores-chicle",
+                  "active": true,
+                  "name": "Chicle"
+                },
+                {
+                  "id": "sabores-pepino",
+                  "active": true,
+                  "name": "Pepino"
+                },
+                {
+                  "id": "sabores-fresa",
+                  "active": true,
+                  "name": "Fresa"
+                },
+                {
+                  "id": "sabores-grosella",
+                  "active": true,
+                  "name": "Grosella"
+                },
+                {
+                  "id": "sabores-frambuesa",
+                  "active": true,
+                  "name": "Frambuesa"
+                },
+                {
+                  "id": "sabores-pina-colada",
+                  "active": true,
+                  "name": "Piña Colada"
+                },
+                {
+                  "id": "sabores-mora-azul",
+                  "active": true,
+                  "name": "Mora Azul"
+                },
+                {
+                  "id": "sabores-kiwi",
+                  "active": true,
+                  "name": "Kiwi"
+                },
+                {
+                  "id": "sabores-manzana-verde",
+                  "active": true,
+                  "name": "Manzana Verde"
+                },
+                {
+                  "id": "sabores-mango",
+                  "active": true,
+                  "name": "Mango"
+                },
+                {
+                  "id": "sabores-frutos-rojos",
+                  "active": true,
+                  "name": "Frutos Rojos"
+                },
+                {
+                  "id": "sabores-maracuya",
+                  "active": true,
+                  "name": "Maracuyá"
+                },
+                {
+                  "id": "sabores-cereza",
+                  "active": true,
+                  "name": "Cereza"
+                },
+                {
+                  "id": "sabores-dragon-fruit",
+                  "active": true,
+                  "name": "Dragon Fruit",
+                  "tag": "nuevo"
+                },
+                {
+                  "id": "sabores-durazno",
+                  "active": true,
+                  "name": "Durazno"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "footnote": "Todas disponibles en 16 oz y 24 oz",
+          "extras": [
+            {
+              "name": "Pops",
+              "price": 15
+            },
+            {
+              "name": "Jellys",
+              "price": 15
+            },
+            {
+              "name": "Tapioca",
+              "price": 15
+            }
+          ],
+          "active": true
+        }
+      ]
+    },
+    {
+      "slug": "blizz",
+      "label": "Blizz",
+      "active": true,
+      "screens": [
+        {
+          "slug": "blizz",
+          "title": "Blizz",
+          "section": "Clásicos, Especiales y Premium",
+          "layout": "trio",
+          "categories": [
+            {
+              "id": "clasico",
+              "name": "Clásico",
+              "price": 55,
+              "accent": "rosa",
+              "items": [
+                {
+                  "id": "clasico-canelitas",
+                  "active": true,
+                  "name": "Canelitas"
+                },
+                {
+                  "id": "clasico-coco",
+                  "active": true,
+                  "name": "Coco"
+                },
+                {
+                  "id": "clasico-durazno",
+                  "active": true,
+                  "name": "Durazno"
+                },
+                {
+                  "id": "clasico-fresa-kiwi",
+                  "active": true,
+                  "name": "Fresa Kiwi"
+                },
+                {
+                  "id": "clasico-fresa-platano",
+                  "active": true,
+                  "name": "Fresa Plátano"
+                },
+                {
+                  "id": "clasico-fresas-con-crema",
+                  "active": true,
+                  "name": "Fresas con Crema"
+                },
+                {
+                  "id": "clasico-frutos-rojos",
+                  "active": true,
+                  "name": "Frutos Rojos"
+                },
+                {
+                  "id": "clasico-kiwi",
+                  "active": true,
+                  "name": "Kiwi"
+                },
+                {
+                  "id": "clasico-krankis",
+                  "active": true,
+                  "name": "Krankis"
+                },
+                {
+                  "id": "clasico-mango-con-coco",
+                  "active": true,
+                  "name": "Mango con Coco"
+                },
+                {
+                  "id": "clasico-mazapan",
+                  "active": true,
+                  "name": "Mazapán"
+                },
+                {
+                  "id": "clasico-mora-azul",
+                  "active": true,
+                  "name": "Mora Azul"
+                },
+                {
+                  "id": "clasico-mora-fresa",
+                  "active": true,
+                  "name": "Mora Fresa"
+                },
+                {
+                  "id": "clasico-oreo",
+                  "active": true,
+                  "name": "Oreo"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "especial",
+              "name": "Especial",
+              "price": 65,
+              "accent": "lavanda",
+              "items": [
+                {
+                  "id": "especial-bubulubu",
+                  "active": true,
+                  "name": "Bubulubu"
+                },
+                {
+                  "id": "especial-ferrero",
+                  "active": true,
+                  "name": "Ferrero"
+                },
+                {
+                  "id": "especial-gansito",
+                  "active": true,
+                  "name": "Gansito"
+                },
+                {
+                  "id": "especial-hershey-s",
+                  "active": true,
+                  "name": "Hershey's"
+                },
+                {
+                  "id": "especial-kinder-bueno",
+                  "active": true,
+                  "name": "Kinder Bueno"
+                },
+                {
+                  "id": "especial-kinder-delice",
+                  "active": true,
+                  "name": "Kinder Delice"
+                },
+                {
+                  "id": "especial-kisses",
+                  "active": true,
+                  "name": "Kisses"
+                },
+                {
+                  "id": "especial-kit-kat",
+                  "active": true,
+                  "name": "Kit Kat"
+                },
+                {
+                  "id": "especial-m-m-s",
+                  "active": true,
+                  "name": "M&M's"
+                },
+                {
+                  "id": "especial-nutella",
+                  "active": true,
+                  "name": "Nutella"
+                },
+                {
+                  "id": "especial-pinguino",
+                  "active": true,
+                  "name": "Pingüino"
+                },
+                {
+                  "id": "especial-red-velvet",
+                  "active": true,
+                  "name": "Red Velvet"
+                }
+              ],
+              "active": true
+            },
+            {
+              "id": "premium",
+              "name": "Premium",
+              "price": 75,
+              "accent": "menta",
+              "items": [
+                {
+                  "id": "premium-baileys-2",
+                  "active": true,
+                  "name": "Baileys"
+                },
+                {
+                  "id": "premium-chocolate-dubai-2",
+                  "active": true,
+                  "name": "Chocolate Dubái",
+                  "tag": "nuevo"
+                },
+                {
+                  "id": "premium-huevo-kinder",
+                  "active": true,
+                  "name": "Huevo Kinder"
+                },
+                {
+                  "id": "premium-lotus-2",
+                  "active": true,
+                  "name": "Lotus"
+                },
+                {
+                  "id": "premium-nutella-b-ready-2",
+                  "active": true,
+                  "name": "Nutella B‑Ready"
+                },
+                {
+                  "id": "premium-pistache",
+                  "active": true,
+                  "name": "Pistache"
+                }
+              ],
+              "active": true
+            }
+          ],
+          "active": true
+        }
+      ]
+    },
+    {
+      "slug": "malteadas",
+      "label": "Malteadas",
+      "active": true,
+      "screens": [
+        {
+          "slug": "malteadas",
+          "title": "Malteadas",
+          "categories": [],
+          "active": true
+        }
+      ]
+    },
+    {
+      "slug": "especialidades",
+      "label": "Especialidades",
+      "active": true,
+      "screens": [
+        {
+          "slug": "especialidades",
+          "title": "Especialidades",
+          "categories": [],
+          "active": true
+        }
+      ]
+    }
+  ]
+}
