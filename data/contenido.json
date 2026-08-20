@@ -273,7 +273,10 @@
           "footnote": "Todos incluyen 2 toppings a elegir",
           "active": true
         }
-      ]
+      ],
+      "image": "/categorias/ice-rollers.webp",
+      "imageAlt": "Rollos de helado con galleta espolvoreada",
+      "imageRatio": 0.9261
     },
     {
       "slug": "bobas",
@@ -1366,7 +1369,10 @@
           ],
           "active": true
         }
-      ]
+      ],
+      "image": "/categorias/bobas.webp",
+      "imageAlt": "Vaso de boba con tapioca y hielo",
+      "imageRatio": 0.6023
     },
     {
       "slug": "frozen-yogurt",
@@ -1455,7 +1461,10 @@
           ],
           "active": true
         }
-      ]
+      ],
+      "image": "/categorias/frozen-yogurt.webp",
+      "imageAlt": "Vaso de frozen yogurt con fresas, zarzamoras y matcha",
+      "imageRatio": 0.9739
     },
     {
       "slug": "sodas-italianas",
@@ -1591,7 +1600,10 @@
           ],
           "active": true
         }
-      ]
+      ],
+      "image": "/categorias/sodas-italianas.webp",
+      "imageAlt": "Dos sodas italianas con hielo, una verde y otra roja",
+      "imageRatio": 1.0057
     },
     {
       "slug": "blizz",

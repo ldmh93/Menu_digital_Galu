@@ -135,6 +135,30 @@ export interface MenuGroup {
   label: string;
   /** Visible en la carta publica. Apaga el menu completo. */
   active?: boolean;
+  /**
+   * Foto del producto que encabeza el menu, dentro de /public.
+   *
+   * Se espera un PNG o WebP con el producto RECORTADO sobre transparente: en
+   * la carta no se enmarca, flota sobre el fondo de marca con su propia
+   * sombra. Una foto con fondo opaco se veria como un cuadro pegado encima.
+   *
+   * Es opcional: un menu sin foto se pinta exactamente como antes, sin hueco
+   * ni marcador de posicion.
+   */
+  image?: string;
+  /**
+   * Que se ve en la foto, para quien no puede verla.
+   *
+   * No repite el nombre del menu —el titulo va justo al lado y un lector de
+   * pantalla lo diria dos veces—, sino que describe el producto real.
+   */
+  imageAlt?: string;
+  /**
+   * Proporcion de la foto (ancho / alto), para reservarle el sitio antes de
+   * que cargue. Sin esto la carta da un salto cuando la imagen aparece y se
+   * lleva por delante el renglon que se estaba leyendo.
+   */
+  imageRatio?: number;
   screens: MenuScreen[];
 }
 

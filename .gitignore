@@ -4,6 +4,9 @@ out/
 build/
 .env*
 !.env.example
+# Capturas que dejan las pruebas visuales; se regeneran solas.
+.capturas/
+
 *.tsbuildinfo
 next-env.d.ts.bak
 .DS_Store

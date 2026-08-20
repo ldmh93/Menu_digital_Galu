@@ -90,12 +90,15 @@ export function MenuBrowser({ groups }: MenuBrowserProps) {
       />
 
       <div>
-        {filtrados.map((group) => (
+        {filtrados.map((group, indice) => (
           <MenuSection
             key={group.slug}
             group={group}
             highlight={consultaNormalizada || undefined}
             buscando={Boolean(consultaNormalizada)}
+            // Solo la foto del primer menu entra en la primera pantalla; las
+            // demas se cargan cuando toca, sin competir por el ancho de banda.
+            primerMenu={indice === 0}
           />
         ))}
 

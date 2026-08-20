@@ -12,6 +12,7 @@ import {
 } from "@/lib/layout";
 import { alEntrarEnPantalla, entradaAlAparecer } from "@/lib/motion";
 import { CategoryCard } from "./CategoryCard";
+import { CategoryPhoto } from "./CategoryPhoto";
 import { ExtrasBar } from "./ExtrasBar";
 
 interface MenuSectionProps {
@@ -20,6 +21,11 @@ interface MenuSectionProps {
   highlight?: string;
   /** Oculta la nota "pendiente" cuando se esta buscando. */
   buscando?: boolean;
+  /**
+   * Primer menu de la pagina. Su foto se carga con prioridad por ser la unica
+   * que entra en la primera pantalla.
+   */
+  primerMenu?: boolean;
 }
 
 /**
@@ -31,7 +37,12 @@ interface MenuSectionProps {
  * de Bobas se recorren de un tiron, y repetir cinco veces "Todas disponibles en
  * 16 y 24 oz" solo estorba: lo que es igual en todos se dice una vez.
  */
-export function MenuSection({ group, highlight, buscando }: MenuSectionProps) {
+export function MenuSection({
+  group,
+  highlight,
+  buscando,
+  primerMenu,
+}: MenuSectionProps) {
   const conCategorias = group.screens.filter(
     (screen) => screen.categories.length > 0,
   );
@@ -41,6 +52,22 @@ export function MenuSection({ group, highlight, buscando }: MenuSectionProps) {
   // La preparacion ("Latte o Frape") es del menu entero, no de cada bloque.
   const preparacion =
     primero?.preparation === undefined ? site.preparation : primero.preparation;
+
+  /*
+   * La foto del menu hereda el color de su primera tarjeta.
+   *
+   * Asi el halo que lleva detras es el mismo que se va a ver justo debajo, y
+   * la foto queda cosida a su seccion en vez de flotar con un color que no
+   * pinta nada ahi.
+   */
+  const acento = conCategorias[0]?.categories[0]?.accent ?? "rosa";
+
+  /*
+   * Al buscar no se pintan las fotos. Quien escribe "coco" quiere ver los
+   * renglones que coinciden, y una foto de medio palmo entre cada resultado
+   * obliga a recorrer la pantalla para leer tres nombres.
+   */
+  const foto = !buscando && group.image ? group.image : null;
 
   return (
     <section
@@ -55,6 +82,18 @@ export function MenuSection({ group, highlight, buscando }: MenuSectionProps) {
           preparation={preparacion}
           tagline={primero?.tagline}
         />
+
+        {/* Titulo → foto → contenido. La foto va aqui y no dentro del titulo
+            para que el bloque de texto siga siendo el mismo de siempre. */}
+        {foto ? (
+          <CategoryPhoto
+            src={foto}
+            alt={group.imageAlt ?? ""}
+            ratio={group.imageRatio ?? 1}
+            accent={acento}
+            prioritaria={primerMenu}
+          />
+        ) : null}
 
         {conCategorias.length === 0 ? (
           buscando ? null : (

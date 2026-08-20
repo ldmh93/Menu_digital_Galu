@@ -108,7 +108,7 @@ Se puede editar el JSON a mano si hace falta, pero el panel evita los errores
 tontos: un id repetido, un precio en cero donde debía no haber precio, o un
 color que no es de la marca.
 
-Cada archivo exporta un **grupo** (`MenuGroup`): un menú puede ocupar un bloque
+Cada entrada de `groups` es un **menú** (`MenuGroup`), y puede ocupar un bloque
 o varios. Bobas usa cinco porque son 64 sabores base + 72 combinaciones; todos
 llevan el mismo título "Bobas" y se distinguen por el subtítulo de sección
 (`section`).
@@ -177,6 +177,50 @@ mayoría de los menús la ofreciera, conviene el camino contrario: ponerla en
 
 `credits` es la firma del desarrollo (nombre, descripción y teléfono). El
 teléfono se convierte solo en un enlace `tel:` marcable.
+
+### Las fotos de cada menú
+
+Cada menú puede llevar una foto de producto que va **entre el título y las
+tarjetas**: título → foto → contenido.
+
+```json
+{
+  "slug": "bobas",
+  "image": "/categorias/bobas.webp",
+  "imageAlt": "Vaso de boba con tapioca y hielo",
+  "imageRatio": 0.6023
+}
+```
+
+Es opcional: un menú sin foto se pinta exactamente igual que antes, sin hueco
+ni marcador. Hoy la tienen Frozen Yogurt, Bobas, Ice Rollers y Sodas Italianas
+— **Blizz no**, y por eso se ve solo con su título.
+
+**La foto tiene que venir recortada sobre transparente.** En la carta no se
+enmarca: el producto flota sobre el fondo de marca con su propia sombra y un
+halo del color de su primera tarjeta. Una foto con fondo opaco se vería como
+un cuadro pegado encima.
+
+Se dimensionan por **altura**, no por anchura. Los productos no comparten
+proporción —el vaso de boba es alargado y el cuenco de yogurt casi cuadrado— y
+fijando el ancho, el vaso alto se volvería gigante y el cuenco enano.
+
+#### Añadir o cambiar una foto
+
+Deja el archivo en `Imagenes categorias/`, apúntalo en el mapa de
+`scripts/preparar-imagenes.cjs` y corre:
+
+```bash
+node scripts/preparar-imagenes.cjs
+```
+
+El script recorta el aire transparente que rodea al producto, lo redimensiona a
+lo que de verdad se pinta en pantalla y lo guarda en `public/categorias/` como
+WebP. Las cuatro fotos originales pesaban 7 MB entre todas y quedaron en 723 KB
+—un 90 % menos— sin diferencia visible. Ese peso importa: la carta se abre casi
+siempre con datos móviles y dentro del local.
+
+Después actualiza `image`, `imageAlt` e `imageRatio` en `data/contenido.json`.
 
 ---
 
@@ -292,4 +336,5 @@ se toca ni el panel ni la carta.
 node scripts/probar-editor.cjs   # las reglas de edición
 node scripts/probar-panel.cjs    # el navegador de verdad, con el servidor en marcha
 node scripts/verificar-json.cjs  # el JSON sigue siendo la carta original
+node scripts/probar-fotos.cjs    # las fotos en móvil, tablet y escritorio
 ```
