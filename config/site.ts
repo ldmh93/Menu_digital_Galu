@@ -57,7 +57,7 @@ export const site: SiteConfig = {
 };
 
 /**
- * Firma de quien desarrolla el sitio.
+ * Firma de quien disenia y desarrolla el sitio.
  *
  * Vive aparte del contenido editable Y FUERA DEL PANEL a proposito. No es un
  * dato del negocio que cambie con la temporada, como los precios o las redes:
@@ -67,7 +67,14 @@ export const site: SiteConfig = {
  */
 export const credits = {
   studio: "Creaciones Luis David",
-  tagline: "Soluciones digitales y web",
+  /**
+   * Las dos disciplinas, con el mismo peso.
+   *
+   * Va en una sola linea corta a proposito: se lee en el pie de un celular,
+   * debajo del nombre, y una lista de servicios ahi se convierte en tres
+   * renglones de letra pequena que nadie termina de leer.
+   */
+  tagline: "Diseño gráfico y sitios web",
   /** Solo digitos, como se marca en Mexico. */
   phone: "4171279042",
   /** Prefijo internacional para los enlaces `tel:` y de WhatsApp. */

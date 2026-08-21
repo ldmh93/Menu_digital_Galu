@@ -127,7 +127,7 @@ function AvisoLegal({ marca, anio }: { marca: string; anio: number }) {
 }
 
 /**
- * Firma del desarrollo.
+ * Firma de quien hizo el sitio.
  *
  * Va en el ultimo escalon de la jerarquia —letra pequena, tono suave— porque
  * la pagina es de GALU, no del taller que la hizo; pero va dentro de una
@@ -151,7 +151,7 @@ function Creditos() {
         style={{ border: "1px solid rgb(147 113 176 / 0.16)" }}
       >
         <span className="text-[0.62rem] font-medium tracking-[0.18em] text-tinta-suave/70 uppercase">
-          Desarrollado por
+          Diseño y desarrollo
         </span>
 
         <span className="font-[family-name:var(--font-display)] text-[0.95rem] font-semibold text-tinta sm:text-base">

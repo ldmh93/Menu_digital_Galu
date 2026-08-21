@@ -41,7 +41,7 @@ export default async function ModuloConfiguracion() {
       <div className="mt-4 rounded-xl border border-black/10 bg-white/60 p-3.5">
         <h2 className="text-xs font-semibold">La firma del desarrollo</h2>
         <p className="mt-1 text-xs leading-relaxed text-tinta-suave">
-          El “Desarrollado por…” del pie <strong>no se edita desde aquí</strong>
+          El “Diseño y desarrollo” del pie <strong>no se edita desde aquí</strong>
           , y es a propósito: no es un dato del negocio que cambie con la
           temporada, como los precios o las redes, sino la autoría del trabajo.
           Vive en <code>config/site.ts</code>, así que no puede borrarse desde
