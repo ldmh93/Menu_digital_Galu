@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 
-import { site } from "@/config/site";
+import { useSitio } from "./SitioProvider";
 
 /**
  * Fondo de la pagina: arte oficial de GALU + capa atmosferica.
@@ -18,6 +18,7 @@ import { site } from "@/config/site";
  * de esta misma capa devuelven las manchas de color a cualquier proporcion.
  */
 export function SiteBackground() {
+  const sitio = useSitio();
   const reducirMovimiento = useReducedMotion();
 
   return (
@@ -42,7 +43,7 @@ export function SiteBackground() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={site.background}
+          src={sitio.background}
           alt=""
           className="h-full w-full object-cover"
           draggable={false}

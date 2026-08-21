@@ -20,6 +20,14 @@ import type { MenuGroup } from "@/data/types";
 export interface ContenidoSite {
   brand: string;
   subtitle: string;
+  /**
+   * Frase de bienvenida bajo el subtitulo, en la portada de la carta.
+   *
+   * Opcional: si no viene, el encabezado usa la suya de siempre. Asi el
+   * contenido que ya estaba guardado antes de que este campo existiera sigue
+   * pintando exactamente igual.
+   */
+  intro?: string;
   logo: string;
   background: string;
   preparation: string;

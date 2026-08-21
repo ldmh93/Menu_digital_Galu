@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import { site } from "@/config/site";
+import { useSitio } from "./SitioProvider";
 import type { MenuGroup, MenuScreen } from "@/data/types";
 import {
   clasesRejilla,
@@ -43,6 +43,7 @@ export function MenuSection({
   buscando,
   primerMenu,
 }: MenuSectionProps) {
+  const sitio = useSitio();
   const conCategorias = group.screens.filter(
     (screen) => screen.categories.length > 0,
   );
@@ -51,7 +52,7 @@ export function MenuSection({
 
   // La preparacion ("Latte o Frape") es del menu entero, no de cada bloque.
   const preparacion =
-    primero?.preparation === undefined ? site.preparation : primero.preparation;
+    primero?.preparation === undefined ? sitio.preparation : primero.preparation;
 
   /*
    * La foto del menu hereda el color de su primera tarjeta.

@@ -10,16 +10,25 @@ import {
   accionAlternarProducto,
   accionEliminarCategoria,
   accionEliminarProducto,
-} from "../acciones";
+  accionMoverCategoria,
+} from "../../acciones";
 import {
-  BotonAccion,
-  BotonEliminar,
   FormularioBloque,
   FormularioCategoria,
   FormularioProducto,
-  Plegable,
   type DestinoPosible,
-} from "../componentes";
+} from "../../componentes";
+import {
+  BotonAccion,
+  BotonEliminar,
+  CabeceraModulo,
+  Distintivo,
+  Plegable,
+} from "../../ui";
+import {
+  botonFantasma,
+  botonSuave,
+} from "../../estilos";
 
 interface Params {
   params: Promise<{ grupo: string }>;
@@ -58,27 +67,25 @@ export default async function MenuDelPanel({ params }: Params) {
   );
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-      <nav className="text-xs text-tinta-suave">
-        <Link href="/admin" className="hover:text-morado">
-          ← Todos los menús
-        </Link>
-      </nav>
+    <main>
+      <CabeceraModulo
+        icono="📂"
+        nombre={grupo.label}
+        alcance="Los bloques de este menú, sus tarjetas y los productos de cada una."
+        volverA="/admin/categorias"
+        volverTexto="Todas las categorías"
+        acciones={
+          <Link
+            href={`/menu/${grupo.slug}`}
+            target="_blank"
+            className={botonSuave}
+          >
+            Ver en la carta ↗
+          </Link>
+        }
+      />
 
-      <header className="mt-3 flex flex-wrap items-baseline justify-between gap-3">
-        <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold sm:text-3xl">
-          {grupo.label}
-        </h1>
-        <Link
-          href={`/menu/${grupo.slug}`}
-          target="_blank"
-          className="text-xs font-medium text-morado hover:underline"
-        >
-          Ver este menú en la carta
-        </Link>
-      </header>
-
-      <div className="mt-8 space-y-8">
+      <div className="space-y-8">
         {grupo.screens.map((bloque) => (
           <section
             key={bloque.slug}
@@ -91,9 +98,7 @@ export default async function MenuDelPanel({ params }: Params) {
                 {bloque.section ?? bloque.title}
               </h2>
               {bloque.active === false ? (
-                <span className="rounded-md bg-red-100 px-1.5 py-0.5 text-[0.65rem] font-medium text-red-700">
-                  Oculto
-                </span>
+                <Distintivo tono="malo">Oculto</Distintivo>
               ) : null}
             </div>
 
@@ -105,7 +110,7 @@ export default async function MenuDelPanel({ params }: Params) {
 
             {/* Tarjetas del bloque */}
             <div className="mt-4 space-y-5">
-              {bloque.categories.map((categoria) => {
+              {bloque.categories.map((categoria, indiceTarjeta) => {
                 const acento = getAccent(categoria.accent);
                 const apagada = categoria.active === false;
                 const ubicacion = {
@@ -151,6 +156,26 @@ export default async function MenuDelPanel({ params }: Params) {
                         </div>
 
                         <div className="flex flex-wrap items-center gap-2">
+                          <BotonAccion
+                            accion={accionMoverCategoria}
+                            campos={{ ...ubicacion, direccion: "arriba" }}
+                            titulo="Subir esta tarjeta"
+                            deshabilitado={indiceTarjeta === 0}
+                            className={botonFantasma}
+                          >
+                            ↑
+                          </BotonAccion>
+                          <BotonAccion
+                            accion={accionMoverCategoria}
+                            campos={{ ...ubicacion, direccion: "abajo" }}
+                            titulo="Bajar esta tarjeta"
+                            deshabilitado={
+                              indiceTarjeta === bloque.categories.length - 1
+                            }
+                            className={botonFantasma}
+                          >
+                            ↓
+                          </BotonAccion>
                           <BotonAccion
                             accion={accionAlternarCategoria}
                             campos={ubicacion}

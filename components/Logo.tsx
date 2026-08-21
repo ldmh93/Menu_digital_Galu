@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-import { site } from "@/config/site";
+import { useSitio } from "./SitioProvider";
 import { bajarYAparecer } from "@/lib/motion";
 import { cx } from "@/lib/format";
 
@@ -24,6 +24,8 @@ export function Logo({
   className = "w-44 sm:w-56 lg:w-64",
   priority = true,
 }: LogoProps) {
+  const sitio = useSitio();
+
   return (
     <motion.div
       variants={bajarYAparecer}
@@ -39,8 +41,8 @@ export function Logo({
         }}
       />
       <Image
-        src={site.logo}
-        alt={site.brand}
+        src={sitio.logo}
+        alt={sitio.brand}
         width={532}
         height={216}
         priority={priority}

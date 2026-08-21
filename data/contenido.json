@@ -2,6 +2,7 @@
   "site": {
     "brand": "GALU",
     "subtitle": "Frozen Yogurt & Bobas",
+    "intro": "Toca un menú para ir directo, o desliza para verlo todo",
     "logo": "/logo.png",
     "background": "/background.svg",
     "preparation": "",

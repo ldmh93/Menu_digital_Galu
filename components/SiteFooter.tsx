@@ -3,13 +3,13 @@
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Phone } from "lucide-react";
 
+import type { SocialNetwork } from "@/config/site";
 import {
-  phoneE164,
-  phoneLegible,
-  site,
-  socialUrl,
-  type SocialNetwork,
-} from "@/config/site";
+  telefonoE164,
+  telefonoLegible,
+  urlDeRed,
+  useSitio,
+} from "./SitioProvider";
 import { alEntrarEnPantalla, entradaAlAparecer } from "@/lib/motion";
 import { TikTok } from "./icons/TikTok";
 
@@ -39,6 +39,8 @@ const nombreRed: Record<SocialNetwork, string> = {
  * Instagram de un toque, que es medio motivo para poner un menu en linea.
  */
 export function SiteFooter() {
+  const sitio = useSitio();
+
   return (
     <motion.footer
       variants={entradaAlAparecer}
@@ -55,19 +57,19 @@ export function SiteFooter() {
         />
 
         <p className="mt-7 text-center text-sm font-light text-balance text-tinta-suave sm:text-base">
-          {site.footer.message}
+          {sitio.footer.message}
         </p>
 
         {/* Redes: el usuario es el mismo en las tres, asi que se escribe una
             vez y cada icono lleva a su red. */}
         <div className="mt-4 flex items-center gap-3">
-          {site.footer.networks.map((red) => (
+          {(sitio.footer.networks as SocialNetwork[]).map((red) => (
             <a
               key={red}
-              href={socialUrl(red)}
+              href={urlDeRed(sitio, red)}
               target="_blank"
               rel="noreferrer noopener"
-              aria-label={`${site.brand} en ${nombreRed[red]}`}
+              aria-label={`${sitio.brand} en ${nombreRed[red]}`}
               className="flex size-11 items-center justify-center rounded-full bg-white/75 text-morado transition-transform duration-200 hover:scale-110"
               style={{ border: "1px solid rgb(147 113 176 / 0.22)" }}
             >
@@ -77,12 +79,12 @@ export function SiteFooter() {
         </div>
 
         <a
-          href={socialUrl("instagram")}
+          href={urlDeRed(sitio, "instagram")}
           target="_blank"
           rel="noreferrer noopener"
           className="mt-3 text-base font-semibold text-tinta sm:text-lg"
         >
-          {site.footer.handle}
+          {sitio.footer.handle}
         </a>
 
         <Creditos />
@@ -100,6 +102,8 @@ export function SiteFooter() {
  * de un toque no sirve de nada.
  */
 function Creditos() {
+  const sitio = useSitio();
+
   return (
     <div className="mt-8 flex flex-col items-center gap-2 text-center">
       <div
@@ -111,20 +115,20 @@ function Creditos() {
           "·" desaparece y la descripcion baja sola. */}
       <p className="text-[0.8rem] leading-relaxed text-tinta-suave/90 sm:text-sm">
         <span className="font-semibold text-tinta-suave">
-          {site.credits.studio}
+          {sitio.credits.studio}
         </span>
         <span aria-hidden="true" className="mx-1.5 hidden text-[#9371b0]/50 sm:inline">
           ·
         </span>
-        <span className="block sm:inline">{site.credits.tagline}</span>
+        <span className="block sm:inline">{sitio.credits.tagline}</span>
       </p>
 
       <a
-        href={`tel:${phoneE164()}`}
+        href={`tel:${telefonoE164(sitio)}`}
         className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.8rem] font-medium text-tinta-suave transition-colors hover:text-morado sm:text-sm"
       >
         <Phone size={14} strokeWidth={2.2} aria-hidden="true" />
-        <span className="tabular-nums">{phoneLegible()}</span>
+        <span className="tabular-nums">{telefonoLegible(sitio)}</span>
       </a>
     </div>
   );

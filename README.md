@@ -157,12 +157,22 @@ Los acentos disponibles (`accent`) son los colores del fondo oficial:
 
 ### Ajustes globales
 
-`config/site.ts` — subtítulo, redes sociales y la firma del pie. Es lo que no
-cambia de un día para otro. **El orden de los menús ya no está aquí**: es
-contenido, se edita desde el panel y vive en `data/contenido.json`.
+El nombre del negocio, el subtítulo, la frase de bienvenida, las redes, el
+teléfono y la firma del pie **se editan desde el panel** (módulos Portada y
+Configuración) y viven en el bloque `site` de `data/contenido.json`.
+
+`config/site.ts` se quedó como **valores de respaldo**: los usa un componente
+que se pinte fuera del proveedor —una prueba, una página suelta— para que se
+vea la carta de siempre en vez de reventar. El orden de los menús tampoco está
+ahí: es contenido, y lo decide el panel.
+
+Los componentes de la carta reciben esos datos por contexto
+(`components/SitioProvider.tsx`), poblado en el layout raíz. Antes cada uno
+importaba el literal compilado, y con eso cambiar el subtítulo desde el panel
+no servía de nada: la carta seguía pintando el valor del día que se compiló.
 
 `preparation` es la pastilla de forma de preparación que sale bajo el título de
-un menú. En `config/site.ts` va **vacía**: no todo se sirve latte ni frape, y
+un menú. La general va **vacía**: no todo se sirve latte ni frape, y
 anunciarlo donde no aplica confunde al cliente. Cada menú que sí la ofrece la
 declara en su bloque — hoy solo **Bobas**, en los cinco:
 
@@ -172,11 +182,8 @@ declara en su bloque — hoy solo **Bobas**, en los cinco:
 
 Desde el panel son los tres botones de "Forma de preparación" al editar un
 bloque: heredar la general, poner una propia, u ocultarla. Si algún día la
-mayoría de los menús la ofreciera, conviene el camino contrario: ponerla en
-`config/site.ts` y ocultarla en los pocos que no.
-
-`credits` es la firma del desarrollo (nombre, descripción y teléfono). El
-teléfono se convierte solo en un enlace `tel:` marcable.
+mayoría de los menús la ofreciera, conviene el camino contrario: ponerla como
+general y ocultarla en los pocos que no.
 
 ### Las fotos de cada menú
 
@@ -297,18 +304,68 @@ justo cuando el dedo quiere avanzar.
 Vive en `/admin` y está protegido por contraseña. No se enlaza desde ninguna
 parte de la carta y pide no ser indexado.
 
+Está organizado **por módulos**: cada uno corresponde a una parte de la carta
+y se administra por separado, sin que se mezclen sus ajustes.
+
+| Módulo | Qué administra |
+| --- | --- |
+| 🏠 Portada | Logo, subtítulo y frase de bienvenida |
+| 📂 Categorías | Los menús, su orden, su foto y las tarjetas de dentro |
+| 🍔 Productos | Los 231, con búsqueda, filtros y acciones rápidas |
+| ⭐ Destacados | Los que llevan insignia de nuevo o favorito |
+| 🖼️ Imágenes | Las fotos y **dónde se usa cada una** |
+| 🎨 Apariencia | La paleta, las tipografías y el logo |
+| ⚙️ Configuración | Nombre del negocio, redes, teléfono y firma |
+| 👁 Vista previa | La carta real dentro del panel, en tres anchos |
+
 ```
 app/admin/
-  entrar/page.tsx    ← la puerta
-  page.tsx           ← los menús y su orden (la jerarquía de la carta)
-  [grupo]/page.tsx   ← un menú por dentro: bloques, tarjetas y productos
-  acciones.ts        ← lo único que puede escribir en el contenido
-  componentes.tsx    ← los formularios
+  modulos.ts             ← EL REGISTRO: define qué módulos existen
+  estilos.ts             ← clases compartidas (neutro: servidor y cliente)
+  ui.tsx                 ← piezas comunes: paneles, botones, estados
+  navegacion.tsx         ← barra lateral / fila en móvil
+  acciones.ts            ← lo único que puede escribir en el contenido
+  page.tsx               ← portada: una tarjeta por módulo
+  entrar/                ← la puerta
+  portada/ categorias/ productos/ destacados/
+  imagenes/ apariencia/ configuracion/ vista-previa/
 lib/
-  contenido.ts       ← TODO el acceso a disco pasa por aquí
-  editor.ts          ← las reglas de edición, en funciones puras
-  sesion.ts          ← la cookie firmada
+  contenido.ts           ← TODO el acceso a disco pasa por aquí
+  editor.ts              ← las reglas de edición, en funciones puras
+  imagenes.ts            ← subida de fotos y medidas
+  sesion.ts              ← la cookie firmada
 ```
+
+### Añadir un módulo nuevo
+
+No hace falta rediseñar nada. Se declara en `app/admin/modulos.ts` y se crea su
+carpeta con un `page.tsx`:
+
+```ts
+{
+  slug: "promociones",
+  nombre: "Promociones",
+  icono: "🏷️",
+  descripcion: "Ofertas de temporada.",
+  alcance: "Qué promociones se anuncian y cuándo caducan.",
+  contar: (contenido) => ({ valor: 3, unidad: "activas" }),
+}
+```
+
+Con eso ya sale como tarjeta en la portada —con su recuento— y en la barra de
+navegación. Los recuentos se **calculan** sobre el contenido real: un número
+escrito a mano es un número que acaba mintiendo.
+
+### Acciones rápidas
+
+Lo que se hace muchas veces al día cuesta un toque, sin abrir formularios:
+cambiar un precio desde la lista, ocultar o mostrar, marcar como favorito o
+nuevo, duplicar (la copia **nace oculta**, para que nadie la vea a medio
+hacer), subir y bajar productos y tarjetas, y reordenar los menús.
+
+Los formularios avisan de **cambios sin guardar** y confirman al guardar. El
+aviso compara contra los valores iniciales, así que si escribes algo y lo
+borras, el formulario vuelve a estar limpio.
 
 **Para usarlo** copia `.env.example` a `.env.local` y pon una contraseña y un
 secreto. Sin esas dos variables el panel avisa en vez de arrancar a medias.
@@ -333,8 +390,8 @@ se toca ni el panel ni la carta.
 ### Comprobarlo
 
 ```bash
-node scripts/probar-editor.cjs   # las reglas de edición
-node scripts/probar-panel.cjs    # el navegador de verdad, con el servidor en marcha
-node scripts/verificar-json.cjs  # el JSON sigue siendo la carta original
-node scripts/probar-fotos.cjs    # las fotos en móvil, tablet y escritorio
+node scripts/probar-editor.cjs     # las reglas de edición
+node scripts/probar-dashboard.cjs  # el panel entero en un navegador de verdad
+node scripts/probar-fotos.cjs      # las fotos en móvil, tablet y escritorio
+node scripts/verificar-json.cjs    # el JSON sigue siendo la carta original
 ```

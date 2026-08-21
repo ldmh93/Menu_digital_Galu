@@ -14,7 +14,7 @@ export default async function Entrar() {
   if (await haySesion()) redirect("/admin");
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-sm flex-col justify-center px-6">
+    <main className="mx-auto flex min-h-[70dvh] max-w-sm flex-col justify-center">
       <h1 className="font-[family-name:var(--font-display)] text-3xl font-semibold">
         Panel de GALU
       </h1>

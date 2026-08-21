@@ -103,12 +103,24 @@ fs.writeFileSync(
   }),
 );
 const { site } = require(path.join(temporal, "site.ts"));
-const siteIgual = JSON.stringify(json.site) === JSON.stringify({
+/*
+ * Del sitio solo se comparan los campos que YA existian en los .ts. El
+ * contenido evoluciona —la frase de bienvenida se anadio despues, y las fotos
+ * de categoria tambien—, y comparar contra el original campo por campo haria
+ * que esta comprobacion fallara cada vez que el panel gana una funcion. Lo que
+ * tiene que seguir siendo cierto es que nada de lo que ya estaba se perdio.
+ */
+const { intro: _bienvenida, ...siteComparable } = json.site;
+const siteIgual = JSON.stringify(siteComparable) === JSON.stringify({
   brand: site.brand, subtitle: site.subtitle, logo: site.logo,
   background: site.background, preparation: site.preparation,
   playlist: site.playlist, footer: site.footer, credits: site.credits,
 });
-console.log(siteIgual ? "  ok   config/site" : "  FALLA config/site");
+console.log(
+  siteIgual
+    ? "  ok   config/site"
+    : "  FALLA config/site (algo de lo original cambio)",
+);
 if (!siteIgual) fallos++;
 
 console.log(fallos === 0 ? "\nMigracion identica al original." : `\n${fallos} diferencias.`);

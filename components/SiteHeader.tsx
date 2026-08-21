@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import { site } from "@/config/site";
+import { useSitio } from "./SitioProvider";
 import { aparecer, contenedor, subirYAparecer } from "@/lib/motion";
 import { Logo } from "./Logo";
 
@@ -21,10 +21,18 @@ interface SiteHeaderProps {
  * vistazo que abrio lo que queria abrir; en cuanto empieza a bajar, la barra
  * de menus toma el relevo y esta portada ya no vuelve a estorbar.
  */
-export function SiteHeader({
-  subtitle = site.subtitle,
-  intro = "Toca un menú para ir directo, o desliza para verlo todo",
-}: SiteHeaderProps) {
+export function SiteHeader({ subtitle, intro }: SiteHeaderProps) {
+  const sitio = useSitio();
+
+  /*
+   * Los dos textos salen del contenido, que es lo que edita el panel. Las
+   * props siguen mandando si vienen: /menu/bobas las usa para su linea
+   * "Estas viendo solo Bobas".
+   */
+  const subtituloFinal = subtitle ?? sitio.subtitle;
+  const introFinal =
+    intro ?? sitio.intro ?? "Toca un menú para ir directo, o desliza para verlo todo";
+
   return (
     <motion.header
       variants={contenedor(0.18)}
@@ -40,17 +48,17 @@ export function SiteHeader({
       >
         <Guion />
         <p className="font-[family-name:var(--font-body)] text-[0.7rem] font-medium tracking-[0.32em] whitespace-nowrap text-tinta-suave uppercase sm:text-sm sm:tracking-[0.4em]">
-          {subtitle}
+          {subtituloFinal}
         </p>
         <Guion />
       </motion.div>
 
-      {intro ? (
+      {introFinal ? (
         <motion.p
           variants={subirYAparecer}
           className="mt-4 max-w-xs text-sm leading-relaxed font-light text-balance text-tinta-suave sm:mt-5 sm:max-w-sm sm:text-base"
         >
-          {intro}
+          {introFinal}
         </motion.p>
       ) : null}
     </motion.header>

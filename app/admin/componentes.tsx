@@ -7,6 +7,15 @@ import type { Accent, ItemTag, MenuItem, MenuLayout } from "@/data/types";
 import { getAccent } from "@/lib/accents";
 import { ACENTOS, ETIQUETAS, REPARTOS } from "@/lib/editor";
 import {
+  Campo,
+  Enviar,
+} from "./ui";
+import {
+  botonPrimario,
+  botonSuave,
+  campo,
+} from "./estilos";
+import {
   accionAgregarCategoria,
   accionAgregarProducto,
   accionEditarBloque,
@@ -32,51 +41,6 @@ import {
 // Estilos compartidos
 // ---------------------------------------------------------------------------
 
-const campo =
-  "w-full rounded-lg border border-black/12 bg-white px-3 py-2 text-sm text-tinta outline-none focus:border-morado focus:ring-2 focus:ring-morado/25";
-
-const etiquetaCampo = "block text-xs font-medium text-tinta-suave";
-
-const boton =
-  "inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors disabled:opacity-50";
-
-const botonPrimario = `${boton} bg-morado text-white hover:bg-morado/90`;
-const botonSuave = `${boton} border border-black/12 bg-white text-tinta hover:bg-black/[0.04]`;
-const botonPeligro = `${boton} border border-red-300 bg-white text-red-700 hover:bg-red-50`;
-
-function Campo({
-  etiqueta,
-  ayuda,
-  children,
-}: {
-  etiqueta: string;
-  ayuda?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <label className="block">
-      <span className={etiquetaCampo}>{etiqueta}</span>
-      {children}
-      {ayuda ? (
-        <span className="mt-0.5 block text-[0.68rem] leading-snug text-tinta-suave">
-          {ayuda}
-        </span>
-      ) : null}
-    </label>
-  );
-}
-
-/** Boton de envio que se apaga solo mientras la accion esta en vuelo. */
-function Enviar({ children = "Guardar" }: { children?: React.ReactNode }) {
-  const { pending } = useFormStatus();
-
-  return (
-    <button type="submit" className={botonPrimario} disabled={pending}>
-      {pending ? "Guardando…" : children}
-    </button>
-  );
-}
-
 function Aviso({ estado }: { estado: Resultado | null }) {
   if (!estado) return null;
 
@@ -87,34 +51,6 @@ function Aviso({ estado }: { estado: Resultado | null }) {
     >
       {estado.ok ? "Guardado." : estado.mensaje}
     </p>
-  );
-}
-
-/**
- * Bloque plegable.
- *
- * `<details>` nativo en vez de un modal: se abre sin JavaScript, el navegador
- * ya sabe hacerlo accesible, y sobre todo se pueden tener varios abiertos a la
- * vez, que es justo lo que se hace al comparar dos precios.
- */
-export function Plegable({
-  resumen,
-  children,
-  abierto,
-}: {
-  resumen: React.ReactNode;
-  children: React.ReactNode;
-  abierto?: boolean;
-}) {
-  return (
-    <details open={abierto} className="group">
-      <summary className="cursor-pointer list-none rounded-lg px-2 py-1.5 text-xs font-medium text-morado hover:bg-morado/8 [&::-webkit-details-marker]:hidden">
-        {resumen}
-      </summary>
-      <div className="mt-2 rounded-xl border border-black/10 bg-white p-3">
-        {children}
-      </div>
-    </details>
   );
 }
 
@@ -137,104 +73,12 @@ export function FormularioEntrar() {
           required
           autoFocus
           autoComplete="current-password"
-          className={`${campo} mt-1`}
+          className={`${campo} mt-1 w-full`}
         />
       </Campo>
 
       <Aviso estado={estado} />
       <Enviar>Entrar</Enviar>
-    </form>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Confirmacion de borrado
-// ---------------------------------------------------------------------------
-
-/**
- * Eliminar en dos toques.
- *
- * No usa `window.confirm`: ese dialogo bloquea el navegador entero y en un
- * movil aparece pegado arriba, lejos del renglon que se iba a borrar, asi que
- * se acepta sin mirar. Aqui la confirmacion sale EN el sitio, dice el nombre
- * de lo que se va a borrar y se puede cancelar con el pulgar.
- */
-export function BotonEliminar({
-  accion,
-  campos,
-  que,
-  aviso,
-}: {
-  accion: (formulario: FormData) => Promise<void>;
-  campos: Record<string, string>;
-  que: string;
-  aviso?: string;
-}) {
-  const [confirmando, setConfirmando] = useState(false);
-
-  if (!confirmando) {
-    return (
-      <button
-        type="button"
-        className={botonSuave}
-        onClick={() => setConfirmando(true)}
-      >
-        Eliminar
-      </button>
-    );
-  }
-
-  return (
-    <form action={accion} className="flex flex-wrap items-center gap-2">
-      {Object.entries(campos).map(([nombre, valor]) => (
-        <input key={nombre} type="hidden" name={nombre} value={valor} />
-      ))}
-
-      <span className="text-xs text-red-700">
-        ¿Eliminar {que}?{aviso ? ` ${aviso}` : ""}
-      </span>
-
-      <button type="submit" className={botonPeligro}>
-        Sí, eliminar
-      </button>
-      <button
-        type="button"
-        className={botonSuave}
-        onClick={() => setConfirmando(false)}
-      >
-        Cancelar
-      </button>
-    </form>
-  );
-}
-
-/** Boton suelto que dispara una accion sin formulario visible. */
-export function BotonAccion({
-  accion,
-  campos,
-  children,
-  titulo,
-  deshabilitado,
-}: {
-  accion: (formulario: FormData) => Promise<void>;
-  campos: Record<string, string>;
-  children: React.ReactNode;
-  titulo?: string;
-  deshabilitado?: boolean;
-}) {
-  return (
-    <form action={accion} className="inline">
-      {Object.entries(campos).map(([nombre, valor]) => (
-        <input key={nombre} type="hidden" name={nombre} value={valor} />
-      ))}
-      <button
-        type="submit"
-        title={titulo}
-        disabled={deshabilitado}
-        className={botonSuave}
-      >
-        {children}
-      </button>
     </form>
   );
 }
@@ -288,7 +132,7 @@ export function FormularioProducto({
             name="name"
             required
             defaultValue={producto?.name ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
 
@@ -303,7 +147,7 @@ export function FormularioProducto({
             step="1"
             min="0"
             defaultValue={producto?.price ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
       </div>
@@ -315,7 +159,7 @@ export function FormularioProducto({
         <input
           name="description"
           defaultValue={producto?.description ?? ""}
-          className={`${campo} mt-1`}
+          className={`${campo} mt-1 w-full`}
         />
       </Campo>
 
@@ -324,7 +168,7 @@ export function FormularioProducto({
           <input
             name="note"
             defaultValue={producto?.note ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
 
@@ -332,7 +176,7 @@ export function FormularioProducto({
           <select
             name="tag"
             defaultValue={producto?.tag ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           >
             <option value="">Sin insignia</option>
             {ETIQUETAS.map((etiqueta) => (
@@ -349,7 +193,7 @@ export function FormularioProducto({
           etiqueta="Categoría"
           ayuda="Cambiarla mueve el producto a otra tarjeta de la carta."
         >
-          <select name="destino" defaultValue={actual} className={`${campo} mt-1`}>
+          <select name="destino" defaultValue={actual} className={`${campo} mt-1 w-full`}>
             {destinos.map((destino) => (
               <option key={destino.valor} value={destino.valor}>
                 {destino.texto}
@@ -397,7 +241,7 @@ function ElectorAcento({ actual }: { actual: Accent }) {
 
   return (
     <fieldset>
-      <legend className={etiquetaCampo}>Color de la cinta</legend>
+      <legend className="block text-xs font-medium text-tinta-suave">Color de la cinta</legend>
       <div className="mt-1.5 flex flex-wrap gap-2">
         {ACENTOS.map((acento) => {
           const tokens = getAccent(acento);
@@ -448,7 +292,7 @@ function CamposTramos({ iniciales }: { iniciales: { label: string; value: number
 
   return (
     <div className="space-y-2">
-      <span className={etiquetaCampo}>Precios por tamaño</span>
+      <span className="block text-xs font-medium text-tinta-suave">Precios por tamaño</span>
 
       {tramos.map((tramo, indice) => (
         <div key={indice} className="flex items-center gap-2">
@@ -456,7 +300,7 @@ function CamposTramos({ iniciales }: { iniciales: { label: string; value: number
             name="tramoLabel"
             placeholder="16 oz"
             defaultValue={tramo.label}
-            className={`${campo} flex-1`}
+            className={`${campo} w-full flex-1`}
           />
           <input
             name="tramoValue"
@@ -528,7 +372,7 @@ export function FormularioCategoria({
             name="name"
             required
             defaultValue={categoria?.name ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
 
@@ -536,7 +380,7 @@ export function FormularioCategoria({
           <input
             name="description"
             defaultValue={categoria?.description ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
       </div>
@@ -554,7 +398,7 @@ export function FormularioCategoria({
             inputMode="decimal"
             min="0"
             defaultValue={unicoInicial}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
 
@@ -568,7 +412,7 @@ export function FormularioCategoria({
             min="1"
             max="4"
             defaultValue={categoria?.columns ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
       </div>
@@ -637,7 +481,7 @@ export function FormularioBloque({
             name="title"
             required
             defaultValue={bloque.title}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
 
@@ -645,7 +489,7 @@ export function FormularioBloque({
           <input
             name="section"
             defaultValue={bloque.section ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
       </div>
@@ -654,12 +498,12 @@ export function FormularioBloque({
         <input
           name="tagline"
           defaultValue={bloque.tagline ?? ""}
-          className={`${campo} mt-1`}
+          className={`${campo} mt-1 w-full`}
         />
       </Campo>
 
       <fieldset>
-        <legend className={etiquetaCampo}>Forma de preparación</legend>
+        <legend className="block text-xs font-medium text-tinta-suave">Forma de preparación</legend>
         <div className="mt-1.5 space-y-1.5">
           {[
             { valor: "heredar", texto: "La general (hoy: ninguna)" },
@@ -688,7 +532,7 @@ export function FormularioBloque({
             name="preparation"
             defaultValue={bloque.preparation ?? ""}
             placeholder="Latte o Frape"
-            className={`${campo} mt-2`}
+            className={`${campo} mt-2 w-full`}
           />
         ) : null}
       </fieldset>
@@ -701,7 +545,7 @@ export function FormularioBloque({
           <select
             name="layout"
             defaultValue={bloque.layout ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           >
             <option value="">Automático</option>
             {REPARTOS.map((reparto) => (
@@ -716,7 +560,7 @@ export function FormularioBloque({
           <input
             name="footnote"
             defaultValue={bloque.footnote ?? ""}
-            className={`${campo} mt-1`}
+            className={`${campo} mt-1 w-full`}
           />
         </Campo>
       </div>
@@ -739,52 +583,3 @@ export function FormularioBloque({
   );
 }
 
-// ---------------------------------------------------------------------------
-// Menu
-// ---------------------------------------------------------------------------
-
-export function FormularioMenu({
-  grupo,
-  label,
-  active,
-}: {
-  grupo: string;
-  label: string;
-  active?: boolean;
-}) {
-  const [estado, accion] = useActionState<Resultado | null, FormData>(
-    accionEditarMenu,
-    null,
-  );
-
-  return (
-    <form action={accion} className="space-y-3">
-      <input type="hidden" name="grupo" value={grupo} />
-
-      <Campo
-        etiqueta="Nombre en la barra"
-        ayuda="El texto del botón que lleva a este menú."
-      >
-        <input name="label" required defaultValue={label} className={`${campo} mt-1`} />
-      </Campo>
-
-      <label className="flex items-center gap-2 text-xs text-tinta">
-        <input
-          type="checkbox"
-          name="active"
-          defaultChecked={active !== false}
-          className="size-4 accent-[#9371b0]"
-        />
-        Visible en la carta
-      </label>
-
-      <div className="flex flex-wrap items-center gap-2">
-        <Enviar>Guardar menú</Enviar>
-        <Aviso estado={estado} />
-      </div>
-    </form>
-  );
-}
-
-export { botonSuave, botonPrimario };
-export type { ItemTag };

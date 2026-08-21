@@ -5,12 +5,23 @@ import { redirect } from "next/navigation";
 
 import type { Accent, ItemTag, MenuLayout, PriceTier } from "@/data/types";
 import { guardarContenido, leerContenido } from "@/lib/contenido";
+import { guardarImagenDeMenu } from "@/lib/imagenes";
 import {
   ACENTOS,
   ETIQUETAS,
   REPARTOS,
   agregarCategoria,
   agregarProducto,
+  asignarImagenMenu,
+  cambiarPrecioProducto,
+  crearMenu,
+  destacarProducto,
+  duplicarProducto,
+  editarSitio,
+  eliminarMenu,
+  moverCategoria,
+  moverProducto,
+  REDES,
   alternarCategoria,
   alternarMenu,
   alternarProducto,
@@ -357,4 +368,183 @@ export async function accionMoverMenu(formulario: FormData): Promise<void> {
   const grupo = texto(formulario, "grupo");
   const direccion = texto(formulario, "direccion") === "arriba" ? "arriba" : "abajo";
   await aplicar((contenido) => moverMenu(contenido, grupo, direccion));
+}
+
+// ---------------------------------------------------------------------------
+// Acciones rapidas
+// ---------------------------------------------------------------------------
+
+export async function accionDuplicarProducto(formulario: FormData): Promise<void> {
+  const id = texto(formulario, "id");
+  await aplicar((contenido) => duplicarProducto(contenido, id));
+}
+
+export async function accionMoverProducto(formulario: FormData): Promise<void> {
+  const id = texto(formulario, "id");
+  const direccion = texto(formulario, "direccion") === "arriba" ? "arriba" : "abajo";
+  await aplicar((contenido) => moverProducto(contenido, id, direccion));
+}
+
+export async function accionDestacarProducto(formulario: FormData): Promise<void> {
+  const id = texto(formulario, "id");
+  const crudo = texto(formulario, "tag");
+  const etiqueta = crudo ? deLista<ItemTag>(crudo, ETIQUETAS, "nuevo") : null;
+
+  await aplicar((contenido) => destacarProducto(contenido, id, etiqueta));
+}
+
+/**
+ * Cambio de precio desde la lista, sin abrir el producto.
+ *
+ * Es la edicion mas frecuente de todas —sube el proveedor y hay que tocar
+ * veinte renglones— y la unica que merece un campo suelto en la tabla.
+ */
+export async function accionPrecioRapido(
+  _previo: Resultado | null,
+  formulario: FormData,
+): Promise<Resultado> {
+  const id = texto(formulario, "id");
+  const precio = numero(formulario, "price");
+
+  return aplicar((contenido) => cambiarPrecioProducto(contenido, id, precio));
+}
+
+export async function accionMoverCategoria(formulario: FormData): Promise<void> {
+  const donde = ubicacionDe(formulario);
+  const direccion = texto(formulario, "direccion") === "arriba" ? "arriba" : "abajo";
+  await aplicar((contenido) => moverCategoria(contenido, donde, direccion));
+}
+
+// ---------------------------------------------------------------------------
+// Menus completos
+// ---------------------------------------------------------------------------
+
+export async function accionCrearMenu(
+  _previo: Resultado | null,
+  formulario: FormData,
+): Promise<Resultado> {
+  const label = texto(formulario, "label");
+  if (!label) return { ok: false, mensaje: "Ponle un nombre a la categoría." };
+
+  return aplicar((contenido) => crearMenu(contenido, label));
+}
+
+export async function accionEliminarMenu(formulario: FormData): Promise<void> {
+  const grupo = texto(formulario, "grupo");
+  await aplicar((contenido) => eliminarMenu(contenido, grupo));
+}
+
+export async function accionQuitarImagenMenu(formulario: FormData): Promise<void> {
+  const grupo = texto(formulario, "grupo");
+  await aplicar((contenido) => asignarImagenMenu(contenido, grupo, null));
+}
+
+/** Cambia solo el texto alternativo, sin volver a subir la foto. */
+export async function accionTextoImagen(
+  _previo: Resultado | null,
+  formulario: FormData,
+): Promise<Resultado> {
+  const grupoSlug = texto(formulario, "grupo");
+  const alt = texto(formulario, "alt");
+
+  return aplicar((contenido) => {
+    const grupo = contenido.groups.find((g) => g.slug === grupoSlug);
+    if (!grupo) throw new Error(`No existe la categoría "${grupoSlug}".`);
+    if (!grupo.image) throw new Error("Esta categoría no tiene foto todavía.");
+
+    return asignarImagenMenu(contenido, grupoSlug, {
+      src: grupo.image,
+      alt,
+      ratio: grupo.imageRatio ?? 1,
+    });
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Imagenes
+// ---------------------------------------------------------------------------
+
+export async function accionSubirImagenMenu(
+  _previo: Resultado | null,
+  formulario: FormData,
+): Promise<Resultado> {
+  await exigirSesion();
+
+  const grupoSlug = texto(formulario, "grupo");
+  const alt = texto(formulario, "alt");
+  const archivo = formulario.get("archivo");
+
+  if (!(archivo instanceof File) || archivo.size === 0) {
+    return { ok: false, mensaje: "Elige una imagen para subir." };
+  }
+
+  try {
+    const guardada = await guardarImagenDeMenu(archivo, grupoSlug);
+
+    const resultado = await aplicar((contenido) =>
+      asignarImagenMenu(contenido, grupoSlug, {
+        src: guardada.ruta,
+        alt: alt || `Foto de ${grupoSlug}`,
+        ratio: guardada.ratio,
+      }),
+    );
+
+    if (!resultado.ok) return resultado;
+
+    return {
+      ok: true,
+      mensaje: guardada.aviso,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      mensaje: error instanceof Error ? error.message : "No se pudo subir.",
+    };
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Datos del negocio
+// ---------------------------------------------------------------------------
+
+export async function accionEditarPortada(
+  _previo: Resultado | null,
+  formulario: FormData,
+): Promise<Resultado> {
+  const subtitle = texto(formulario, "subtitle");
+  if (!subtitle) return { ok: false, mensaje: "El subtítulo no puede ir vacío." };
+
+  return aplicar((contenido) =>
+    editarSitio(contenido, {
+      subtitle,
+      intro: texto(formulario, "intro"),
+    }),
+  );
+}
+
+export async function accionEditarNegocio(
+  _previo: Resultado | null,
+  formulario: FormData,
+): Promise<Resultado> {
+  const brand = texto(formulario, "brand");
+  if (!brand) return { ok: false, mensaje: "El nombre del negocio no puede ir vacío." };
+
+  // Las redes llegan como varias casillas con el mismo nombre.
+  const redes = formulario
+    .getAll("networks")
+    .map((v) => String(v))
+    .filter((red) => REDES.includes(red));
+
+  return aplicar((contenido) =>
+    editarSitio(contenido, {
+      brand,
+      handle: texto(formulario, "handle"),
+      networks: redes,
+      message: texto(formulario, "message"),
+      studio: texto(formulario, "studio"),
+      tagline: texto(formulario, "tagline"),
+      phone: texto(formulario, "phone"),
+      phoneCountryCode: texto(formulario, "phoneCountryCode"),
+    }),
+  );
 }
