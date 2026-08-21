@@ -3,15 +3,10 @@
 import { motion } from "framer-motion";
 import { Facebook, Instagram, Phone } from "lucide-react";
 
-import type { SocialNetwork } from "@/config/site";
-import {
-  telefonoE164,
-  telefonoLegible,
-  urlDeRed,
-  useSitio,
-} from "./SitioProvider";
+import { credits, phoneE164, phoneLegible, type SocialNetwork } from "@/config/site";
 import { alEntrarEnPantalla, entradaAlAparecer } from "@/lib/motion";
 import { TikTok } from "./icons/TikTok";
+import { urlDeRed, useSitio } from "./SitioProvider";
 
 /**
  * Icono de una red social. TikTok es solido y los de Lucide son de trazo,
@@ -30,15 +25,28 @@ const nombreRed: Record<SocialNetwork, string> = {
   tiktok: "TikTok",
 };
 
+interface SiteFooterProps {
+  /**
+   * Año del aviso de derechos.
+   *
+   * Llega desde el servidor en vez de calcularse aqui: este componente se
+   * pinta primero en el servidor y luego en el navegador, y si el reloj de
+   * cada lado cayera a distinto lado de una Nochevieja, React encontraria dos
+   * textos distintos y avisaria de un error de hidratacion.
+   */
+  anio: number;
+}
+
 /**
- * Pie de la pagina: redes de GALU y firma de quien hizo el sitio.
+ * Pie de la pagina: redes de GALU, aviso de derechos y firma de quien hizo el
+ * sitio.
  *
  * En el televisor los iconos eran decorativos —nadie iba a tocarlos—, asi que
  * el usuario se escribia una sola vez y los iconos hacian de prefijo. Aqui son
  * enlaces de verdad: quien esta viendo la carta en su celular puede irse al
  * Instagram de un toque, que es medio motivo para poner un menu en linea.
  */
-export function SiteFooter() {
+export function SiteFooter({ anio }: SiteFooterProps) {
   const sitio = useSitio();
 
   return (
@@ -87,6 +95,7 @@ export function SiteFooter() {
           {sitio.footer.handle}
         </a>
 
+        <AvisoLegal marca={sitio.brand} anio={anio} />
         <Creditos />
       </div>
     </motion.footer>
@@ -94,42 +103,76 @@ export function SiteFooter() {
 }
 
 /**
- * Firma del desarrollo.
+ * Derechos y letra pequena de la carta.
  *
- * Va deliberadamente en el ultimo escalon de la jerarquia —letra pequena, tono
- * suave— porque la pagina es de GALU, no del taller que la hizo. El telefono si
- * es un enlace `tel:` de verdad: en un celular un numero que no se puede marcar
- * de un toque no sirve de nada.
+ * Las dos notas de abajo no son relleno legal: en una carta con precios y
+ * fotos son exactamente lo que evita una discusion en el mostrador. El precio
+ * de la pantalla puede haber cambiado esta manana, y una foto de estudio nunca
+ * sale igual que el vaso que se sirve.
  */
-function Creditos() {
-  const sitio = useSitio();
-
+function AvisoLegal({ marca, anio }: { marca: string; anio: number }) {
   return (
-    <div className="mt-8 flex flex-col items-center gap-2 text-center">
-      <div
-        aria-hidden="true"
-        className="size-1 rounded-full bg-[#9371b0]/35"
-      />
-
-      {/* En un celular estrecho las dos mitades no caben en una linea: el
-          "·" desaparece y la descripcion baja sola. */}
-      <p className="text-[0.8rem] leading-relaxed text-tinta-suave/90 sm:text-sm">
-        <span className="font-semibold text-tinta-suave">
-          {sitio.credits.studio}
-        </span>
-        <span aria-hidden="true" className="mx-1.5 hidden text-[#9371b0]/50 sm:inline">
-          ·
-        </span>
-        <span className="block sm:inline">{sitio.credits.tagline}</span>
+    <div className="mt-8 flex flex-col items-center gap-1.5 text-center">
+      <p className="text-[0.78rem] font-medium text-tinta-suave sm:text-[0.85rem]">
+        © {anio} {marca}. Todos los derechos reservados.
       </p>
 
-      <a
-        href={`tel:${telefonoE164(sitio)}`}
-        className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.8rem] font-medium text-tinta-suave transition-colors hover:text-morado sm:text-sm"
+      <p className="max-w-md text-[0.7rem] leading-relaxed text-balance text-tinta-suave/75 sm:text-[0.75rem]">
+        Precios sujetos a cambio sin previo aviso. Las imágenes son
+        ilustrativas y pueden variar respecto al producto servido. La
+        disponibilidad de sabores depende del día.
+      </p>
+    </div>
+  );
+}
+
+/**
+ * Firma del desarrollo.
+ *
+ * Va en el ultimo escalon de la jerarquia —letra pequena, tono suave— porque
+ * la pagina es de GALU, no del taller que la hizo; pero va dentro de una
+ * pastilla propia, separada del aviso de derechos, para que se lea como una
+ * firma y no como una linea mas de letra pequena.
+ *
+ * Los datos salen de `config/site.ts` y NO del contenido editable: es la firma
+ * de quien desarrolla, no un dato del negocio, y no tiene por que poder
+ * borrarse ni cambiarse desde el panel.
+ */
+function Creditos() {
+  return (
+    <div className="mt-6 flex flex-col items-center">
+      <div
+        aria-hidden="true"
+        className="mb-4 size-1 rounded-full bg-[#9371b0]/35"
+      />
+
+      <div
+        className="flex flex-col items-center gap-1 rounded-2xl bg-white/60 px-5 py-3 text-center"
+        style={{ border: "1px solid rgb(147 113 176 / 0.16)" }}
       >
-        <Phone size={14} strokeWidth={2.2} aria-hidden="true" />
-        <span className="tabular-nums">{telefonoLegible(sitio)}</span>
-      </a>
+        <span className="text-[0.62rem] font-medium tracking-[0.18em] text-tinta-suave/70 uppercase">
+          Desarrollado por
+        </span>
+
+        <span className="font-[family-name:var(--font-display)] text-[0.95rem] font-semibold text-tinta sm:text-base">
+          {credits.studio}
+        </span>
+
+        <span className="text-[0.72rem] leading-snug text-tinta-suave sm:text-[0.78rem]">
+          {credits.tagline}
+        </span>
+
+        {/* El telefono es un enlace `tel:` de verdad: en un celular un numero
+            que no se puede marcar de un toque no sirve de nada. */}
+        <a
+          href={`tel:${phoneE164()}`}
+          className="mt-1 inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1.5 text-[0.75rem] font-medium text-morado transition-colors hover:bg-white sm:text-[0.8rem]"
+          style={{ border: "1px solid rgb(147 113 176 / 0.2)" }}
+        >
+          <Phone size={13} strokeWidth={2.2} aria-hidden="true" />
+          <span className="tabular-nums">{phoneLegible()}</span>
+        </a>
+      </div>
     </div>
   );
 }

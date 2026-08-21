@@ -35,14 +35,21 @@ export default async function ModuloConfiguracion() {
           handle={site.footer.handle}
           networks={site.footer.networks}
           message={site.footer.message}
-          studio={site.credits.studio}
-          tagline={site.credits.tagline}
-          phone={site.credits.phone}
-          phoneCountryCode={site.credits.phoneCountryCode}
         />
       </Panel>
 
       <div className="mt-4 rounded-xl border border-black/10 bg-white/60 p-3.5">
+        <h2 className="text-xs font-semibold">La firma del desarrollo</h2>
+        <p className="mt-1 text-xs leading-relaxed text-tinta-suave">
+          El “Desarrollado por…” del pie <strong>no se edita desde aquí</strong>
+          , y es a propósito: no es un dato del negocio que cambie con la
+          temporada, como los precios o las redes, sino la autoría del trabajo.
+          Vive en <code>config/site.ts</code>, así que no puede borrarse desde
+          el panel ni por descuido. Para cambiarla hay que tocar ese archivo.
+        </p>
+      </div>
+
+      <div className="mt-3 rounded-xl border border-black/10 bg-white/60 p-3.5">
         <h2 className="text-xs font-semibold">Lo que esta carta no muestra</h2>
         <p className="mt-1 text-xs leading-relaxed text-tinta-suave">
           No hay <strong>horarios</strong> ni <strong>dirección</strong> porque

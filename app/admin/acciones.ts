@@ -541,10 +541,6 @@ export async function accionEditarNegocio(
       handle: texto(formulario, "handle"),
       networks: redes,
       message: texto(formulario, "message"),
-      studio: texto(formulario, "studio"),
-      tagline: texto(formulario, "tagline"),
-      phone: texto(formulario, "phone"),
-      phoneCountryCode: texto(formulario, "phoneCountryCode"),
     }),
   );
 }

@@ -62,7 +62,7 @@ export default async function MenuPage({ params }: Params) {
           conserva el buscador: Bobas sola ya son cinco bloques. */}
       <MenuBrowser groups={[group]} />
 
-      <SiteFooter />
+      <SiteFooter anio={new Date().getFullYear()} />
     </>
   );
 }

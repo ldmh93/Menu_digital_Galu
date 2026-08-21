@@ -70,25 +70,17 @@ export function FormularioPortada({
   );
 }
 
-/** Datos del negocio: marca, redes, contacto y firma. */
+/** Datos del negocio: la marca y sus redes. */
 export function FormularioNegocio({
   brand,
   handle,
   networks,
   message,
-  studio,
-  tagline,
-  phone,
-  phoneCountryCode,
 }: {
   brand: string;
   handle: string;
   networks: string[];
   message: string;
-  studio: string;
-  tagline: string;
-  phone: string;
-  phoneCountryCode: string;
 }) {
   const [estado, accion] = useActionState<Resultado | null, FormData>(
     accionEditarNegocio,
@@ -174,51 +166,6 @@ export function FormularioNegocio({
             className={`${campo} mt-1 w-full`}
           />
         </Campo>
-      </fieldset>
-
-      <fieldset className="space-y-3 border-t border-black/10 pt-4">
-        <legend className="text-xs font-semibold">
-          Firma de quien desarrolla
-        </legend>
-
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Campo etiqueta="Estudio">
-            <input
-              name="studio"
-              defaultValue={studio}
-              className={`${campo} mt-1 w-full`}
-            />
-          </Campo>
-
-          <Campo etiqueta="Descripción">
-            <input
-              name="tagline"
-              defaultValue={tagline}
-              className={`${campo} mt-1 w-full`}
-            />
-          </Campo>
-
-          <Campo etiqueta="Código de país" ayuda="Solo dígitos. México es 52.">
-            <input
-              name="phoneCountryCode"
-              inputMode="numeric"
-              defaultValue={phoneCountryCode}
-              className={`${campo} mt-1 w-full`}
-            />
-          </Campo>
-
-          <Campo
-            etiqueta="Teléfono"
-            ayuda="Solo dígitos. Se convierte solo en un enlace para llamar."
-          >
-            <input
-              name="phone"
-              inputMode="numeric"
-              defaultValue={phone}
-              className={`${campo} mt-1 w-full`}
-            />
-          </Campo>
-        </div>
       </fieldset>
 
       <EstadoFormulario sucio={sucio} estado={estado} />

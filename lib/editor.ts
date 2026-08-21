@@ -709,22 +709,18 @@ export interface DatosSitio {
   handle: string;
   networks: string[];
   message: string;
-  studio: string;
-  tagline: string;
-  phone: string;
-  phoneCountryCode: string;
 }
 
 /**
  * Guarda los datos del negocio.
  *
  * Cada campo se toca solo si viene: asi un formulario que edita media docena
- * de datos no borra los que no incluye, que es como se pierde el telefono al
- * guardar el subtitulo.
+ * de datos no borra los que no incluye, que es como se pierde el subtitulo al
+ * guardar las redes.
  *
- * El telefono se queda solo con digitos. Se usa para construir enlaces `tel:`
- * y de WhatsApp, y un espacio o un guion de mas los rompe sin que se note
- * hasta que alguien intenta llamar desde la carta.
+ * La firma del desarrollo NO se toca desde aqui: no es un dato del negocio
+ * sino la autoria del trabajo, y vive en config/site.ts, fuera del alcance del
+ * panel.
  */
 export function editarSitio(
   contenido: Contenido,
@@ -745,15 +741,6 @@ export function editarSitio(
   }
   if (datos.networks !== undefined) sitio.footer.networks = datos.networks;
   if (datos.message !== undefined) sitio.footer.message = datos.message.trim();
-
-  if (datos.studio !== undefined) sitio.credits.studio = datos.studio.trim();
-  if (datos.tagline !== undefined) sitio.credits.tagline = datos.tagline.trim();
-  if (datos.phone !== undefined) {
-    sitio.credits.phone = datos.phone.replace(/\D/g, "");
-  }
-  if (datos.phoneCountryCode !== undefined) {
-    sitio.credits.phoneCountryCode = datos.phoneCountryCode.replace(/\D/g, "");
-  }
 
   return copia;
 }

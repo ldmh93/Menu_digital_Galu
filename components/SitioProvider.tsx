@@ -58,12 +58,8 @@ export function urlDeRed(sitio: SitioPublico, red: string): string {
   return `https://instagram.com/${usuario}`;
 }
 
-/** Telefono en formato internacional, sin espacios: +524171279042 */
-export function telefonoE164(sitio: SitioPublico): string {
-  return `+${sitio.credits.phoneCountryCode}${sitio.credits.phone}`;
-}
-
-/** Telefono agrupado para leerlo de un vistazo: 417 127 9042 */
-export function telefonoLegible(sitio: SitioPublico): string {
-  return sitio.credits.phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
-}
+/*
+ * Aqui no hay funciones de telefono. El unico telefono de la carta es el de la
+ * firma del desarrollo, que no es contenido editable: sale de config/site.ts
+ * con sus propias funciones, fuera del alcance del panel.
+ */

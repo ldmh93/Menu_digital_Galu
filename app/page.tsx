@@ -15,7 +15,7 @@ export default async function Home() {
     <>
       <SiteHeader />
       <MenuBrowser groups={await getPlaylistGroups()} />
-      <SiteFooter />
+      <SiteFooter anio={new Date().getFullYear()} />
     </>
   );
 }

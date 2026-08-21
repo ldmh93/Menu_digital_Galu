@@ -37,15 +37,6 @@ export interface SiteConfig {
     networks: SocialNetwork[];
     message: string;
   };
-  /** Firma de quien desarrolla el sitio. Va en la ultima linea de la pagina. */
-  credits: {
-    studio: string;
-    tagline: string;
-    /** Solo digitos, como se marca en Mexico. */
-    phone: string;
-    /** Prefijo internacional para los enlaces `tel:` y de WhatsApp. */
-    phoneCountryCode: string;
-  };
 }
 
 /** Redes con icono disponible en el pie. */
@@ -63,13 +54,25 @@ export const site: SiteConfig = {
     networks: ["instagram", "facebook", "tiktok"],
     message: "Hecho al momento, siempre fresco",
   },
-  credits: {
-    studio: "Creaciones Luis David",
-    tagline: "Soluciones digitales y web",
-    phone: "4171279042",
-    phoneCountryCode: "52",
-  },
 };
+
+/**
+ * Firma de quien desarrolla el sitio.
+ *
+ * Vive aparte del contenido editable Y FUERA DEL PANEL a proposito. No es un
+ * dato del negocio que cambie con la temporada, como los precios o las redes:
+ * es la autoria del trabajo. Para cambiarla hay que tocar este archivo, que es
+ * justo la barrera que se busca — no se puede borrar desde una pantalla de
+ * administracion, ni por descuido ni queriendo.
+ */
+export const credits = {
+  studio: "Creaciones Luis David",
+  tagline: "Soluciones digitales y web",
+  /** Solo digitos, como se marca en Mexico. */
+  phone: "4171279042",
+  /** Prefijo internacional para los enlaces `tel:` y de WhatsApp. */
+  phoneCountryCode: "52",
+} as const;
 
 /** Direccion publica de cada red, a partir del usuario configurado. */
 export function socialUrl(network: SocialNetwork): string {
@@ -82,10 +85,10 @@ export function socialUrl(network: SocialNetwork): string {
 
 /** Telefono en formato internacional, sin espacios: +524171279042 */
 export function phoneE164(): string {
-  return `+${site.credits.phoneCountryCode}${site.credits.phone}`;
+  return `+${credits.phoneCountryCode}${credits.phone}`;
 }
 
 /** Telefono agrupado para leerlo de un vistazo: 417 127 9042 */
 export function phoneLegible(): string {
-  return site.credits.phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
+  return credits.phone.replace(/(\d{3})(\d{3})(\d{4})/, "$1 $2 $3");
 }

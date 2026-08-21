@@ -104,18 +104,27 @@ fs.writeFileSync(
 );
 const { site } = require(path.join(temporal, "site.ts"));
 /*
- * Del sitio solo se comparan los campos que YA existian en los .ts. El
- * contenido evoluciona —la frase de bienvenida se anadio despues, y las fotos
- * de categoria tambien—, y comparar contra el original campo por campo haria
- * que esta comprobacion fallara cada vez que el panel gana una funcion. Lo que
- * tiene que seguir siendo cierto es que nada de lo que ya estaba se perdio.
+ * Del sitio solo se comparan los campos que YA existian en los .ts y que
+ * SIGUEN siendo contenido editable.
+ *
+ * El contenido evoluciona: la frase de bienvenida se anadio despues, y la
+ * firma del desarrollo se saco del panel para que no pueda borrarse desde
+ * ahi. Comparar campo por campo contra el original haria que esta
+ * comprobacion fallara cada vez que eso pasa. Lo que tiene que seguir siendo
+ * cierto es que nada de lo que ya estaba se perdio POR ERROR.
  */
-const { intro: _bienvenida, ...siteComparable } = json.site;
-const siteIgual = JSON.stringify(siteComparable) === JSON.stringify({
-  brand: site.brand, subtitle: site.subtitle, logo: site.logo,
-  background: site.background, preparation: site.preparation,
-  playlist: site.playlist, footer: site.footer, credits: site.credits,
-});
+const { intro: _bienvenida, ...siteAhora } = json.site;
+const siteEntonces = {
+  brand: site.brand,
+  subtitle: site.subtitle,
+  logo: site.logo,
+  background: site.background,
+  preparation: site.preparation,
+  playlist: site.playlist,
+  footer: site.footer,
+};
+
+const siteIgual = JSON.stringify(siteAhora) === JSON.stringify(siteEntonces);
 console.log(
   siteIgual
     ? "  ok   config/site"

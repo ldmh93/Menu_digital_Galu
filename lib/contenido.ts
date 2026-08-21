@@ -38,12 +38,11 @@ export interface ContenidoSite {
     networks: string[];
     message: string;
   };
-  credits: {
-    studio: string;
-    tagline: string;
-    phone: string;
-    phoneCountryCode: string;
-  };
+  /*
+   * Aqui NO esta la firma del desarrollo. Vive en config/site.ts, fuera del
+   * contenido editable, porque no es un dato del negocio sino la autoria del
+   * trabajo: no debe poder cambiarse ni borrarse desde el panel.
+   */
 }
 
 export interface Contenido {
